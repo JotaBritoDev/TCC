@@ -1,0 +1,14 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-1 mb-3 border-bottom">
+  <h3 class="h3 my-0 pt-2 mr-3">Pacientes</h3>
+  <div class="btn-toolbar mb-md-0">
+    <button class="btn btn-primary" *ngIf="!formVisible" (click)="showForm()">
+      <mat-icon class="align-middle">person_add</mat-icon>
+      <div class="d-none d-sm-inline-block ml-2">Novo</div>
+    </button>
+  </div>
+</div>
+
+<div>
+    <app-pacientes-grid *ngIf="!formVisible"></app-pacientes-grid>
+    <app-pacientes-form *ngIf="formVisible" (finalizouAlteracao)="showGrid()"></app-pacientes-form>
+</div>

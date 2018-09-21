@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-1 mb-3 border-bottom">
+  <h3 class="h3 my-0 pt-2 mr-3">Dashboard</h3>
+</div>
+
+<div class="card mb-3">
+  <div class="card-header card-title text-white bg-dashboard"><strong>Consultas</strong></div>
+  <div class="card-body">
+    <p class="card-text">Texto</p>
+    <div class="text-right btn-group-sm">
+      <a (click)="redirect('consultas')" class="btn text-white btn-dashboard sm-btn">Ir para...</a>
+    </div>
+  </div>
+</div>
+
+<div class="card-deck mb-3">
+  <div class="card">
+    <div class="card-header card-title text-white bg-dashboard"><strong>Médicos</strong></div>
+    <div class="card-body">
+      <p class="card-text">Texto</p>
+      <div class="text-right btn-group-sm">
+        <a (click)="redirect('medicos')" class="btn btn-dashboard text-white">Ir para...</a>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header card-title text-white bg-dashboard"><strong>Pacientes</strong></div>
+    <div class="card-body">
+      <p class="card-text">Texto</p>
+      <div class="text-right btn-group-sm">
+        <a (click)="redirect('pacientes')" class="btn text-white btn-dashboard">Ir para...</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card-deck mb-2">
+    <div class="card">
+      <div class="card-header card-title text-white bg-dashboard"><strong>Horários</strong></div>
+      <div class="card-body">
+        <p class="card-text">X Cadastrados</p>
+        <div class="text-right btn-group-sm">
+          <a (click)="redirect('horarios')" class="btn btn-dashboard text-white">Ir para...</a>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header card-title text-white bg-dashboard"><strong>Medicamentos</strong></div>
+      <div class="card-body">
+        <p class="card-text">Y Cadastrados</p>
+        <div class="text-right btn-group-sm">
+          <a (click)="redirect('medicamentos')" class="btn text-white btn-dashboard">Ir para...</a>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header card-title text-white bg-dashboard"><strong>Convênios</strong></div>
+      <div class="card-body">
+        <p class="card-text">Z Cadastrados</p>
+        <div class="text-right btn-group-sm">
+          <a (click)="redirect('convenios')" class="btn text-white btn-dashboard">Ir para...</a>
+        </div>
+      </div>
+    </div>    
+  </div>

@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+// $primary: rgba(241,97,97,.7);
+$primary: #ad50a9;
+
+$table-accent-bg: #fff6ff;
+
+$theme-colors: (
+  "selected": #db8bd9,
+  "dashboard": #dbb6da,
+  "head": #962e90
+);
+
+@import '../node_modules/bootstrap/scss/bootstrap';
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
