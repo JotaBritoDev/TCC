@@ -1,10 +1,8 @@
 import {
   Component,
-  OnInit,
-  EventEmitter,
-  Output
-} from '@angular/core';
-import { Router } from '@angular/router';
+  OnInit, 
+  Output,
+  EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-medicamentos-form',
@@ -13,19 +11,15 @@ import { Router } from '@angular/router';
 })
 export class MedicamentosFormComponent implements OnInit {
 
-  @Output() finalizouAlteracao = new EventEmitter();
+  @Output() cancel = new EventEmitter;
+  @Output() save = new EventEmitter;
 
-  public onSubmit(form) {
-    console.log(form.value);
-    this.finalizouAlteracao.emit();
+  public onSubmit(medicamento) {
+    this.save.emit(medicamento);    
   }
 
-  public cancelar() {
-    this.finalizouAlteracao.emit();
-  }
+  constructor() { }
 
-  constructor() {}
-
-  ngOnInit() {}
+  ngOnInit() { }
 
 }

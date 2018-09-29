@@ -8,6 +8,7 @@ import { MedicosComponent } from './contextos/medicos/medicos.component';
 import { HorariosComponent } from './contextos/horarios/horarios.component';
 import { MedicamentosComponent } from './contextos/medicamentos/medicamentos.component';
 import { ConveniosComponent } from './contextos/convenios/convenios.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/agenda', pathMatch: 'full' },
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'medicos', component: MedicosComponent },
   { path: 'horarios', component: HorariosComponent },
   { path: 'medicamentos', component: MedicamentosComponent },
-  { path: 'convenios', component: ConveniosComponent }
+  { path: 'convenios', component: ConveniosComponent },
+  { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({

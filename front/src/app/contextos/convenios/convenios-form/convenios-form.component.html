@@ -1,33 +1,43 @@
-<form autocomplete="off" #frm="ngForm" (ngSubmit)="onSubmit(frm)" class="form-horizontal">
-  <div class="form-group">
-    <div class="col-sm-12">
-      <label for="convenioInput">Nome do convenio</label>
-    </div>
-    <div class="col-sm-12">
-      <input class="form-control" id="convenioInput" name="convenio" placeholder="Ex.: Unimed, Bradesco, AMED"
-        [(ngModel)]="convenio.nome" autofocus required>
+<form autocomplete="off" (ngSubmit)="onSubmit(frm.form.value)" class="form-horizontal" #frm="ngForm">
+  <div class="form-group align-middle">
+    <div class="form-row align-middle">
+      <div class="col-sm-12">Nome do convênio</div>
+      <div class="col-sm-8">
+        <input class="form-control" id="convenioInput" name="nome" placeholder="Ex.: Unimed, Bradesco, AMED" ngModel
+          autofocus required>
+      </div>
+      <div class="col-sm-1">
+        <input type="checkbox" class="form-control" id="conveniockbInput">
+
+      </div>
+      <div class="col-sm-3 align-middle">
+        <label class="align-middle" for="conveniockbInput">Ativo</label>
+      </div>
     </div>
   </div>
 
-  <div class="form-group col-sm-12">
-    <div class="d-none d-sm-block">
-      <div class="btn-toolbar mb-2 mb-md-0 btn-group">
-        <button type="submit" class="btn btn-primary" [disabled]="!frm.valid">
+
+  <div class="form-group">
+    <div class="form-row col-sm-12">
+      <div class="d-none d-sm-block">
+        <div class="btn-toolbar mb-2 mb-md-0 btn-group">
+          <button type="submit" class="btn btn-primary" [disabled]="!frm.valid">
+            Salvar
+          </button>
+          <button type="button" class="btn btn-outline-secondary" (click)="cancel.emit()">
+            Cancelar
+          </button>
+        </div>
+      </div>
+
+      <div class="form-group d-sm-none">
+        <button type="submit" class="btn btn-primary btn-block" [disabled]="!frm.valid">
           Salvar
         </button>
-        <button type="button" class="btn btn-outline-secondary" (click)="cancelar()">
+        <button type="button" class="btn btn-outline-secondary btn-block" (click)="cancel.emit()">
           Cancelar
         </button>
       </div>
-    </div>
-
-    <div class="form-group d-sm-none">
-      <button type="submit" class="btn btn-primary btn-block" [disabled]="!frm.valid">
-        Salvar
-      </button>
-      <button type="button" class="btn btn-outline-secondary btn-block" (click)="cancelar()">
-        Cancelar
-      </button>
     </div>
   </div>
 </form>

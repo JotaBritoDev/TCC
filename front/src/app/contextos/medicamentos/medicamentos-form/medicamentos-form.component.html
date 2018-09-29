@@ -1,4 +1,4 @@
-<form autocomplete="off" #frm="ngForm" (ngSubmit)="onSubmit(frm)" class="form-horizontal">
+<form autocomplete="off" (ngSubmit)="onSubmit(frm.form.value)" class="form-horizontal" #frm="ngForm">
   <div class="form-group">
     <div class="col-sm-12">
       <label for="medicamentoInput">Nome do medicamento</label>
@@ -15,7 +15,7 @@
         <button type="submit" class="btn btn-primary" [disabled]="!frm.valid">
           Salvar
         </button>
-        <button type="button" class="btn btn-outline-secondary" (click)="cancelar()">
+        <button type="button" class="btn btn-outline-secondary" (click)="cancel.emit()">
           Cancelar
         </button>
       </div>
@@ -25,7 +25,7 @@
       <button type="submit" class="btn btn-primary btn-block" [disabled]="!frm.valid">
         Salvar
       </button>
-      <button type="button" class="btn btn-outline-secondary btn-block" (click)="cancelar()">
+      <button type="button" class="btn btn-outline-secondary btn-block" (click)="cancel.emit()">
         Cancelar
       </button>
     </div>

@@ -1,27 +1,36 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit, 
+  Output,
+  EventEmitter, 
+  ViewChild, 
+  AfterContentInit} from '@angular/core';
 
 @Component({
   selector: 'app-convenios-form',
   templateUrl: './convenios-form.component.html',
   styleUrls: ['./convenios-form.component.scss']
 })
-export class ConveniosFormComponent implements OnInit {
+export class ConveniosFormComponent implements OnInit, AfterContentInit {
 
-  @Output() finalizouAlteracao = new EventEmitter();
+  @Output() cancel = new EventEmitter;
+  @Output() save = new EventEmitter;
+  @ViewChild('frm') form;
 
-  public convenio = { nome: '' };
-
-  public onSubmit(form) {
-    console.log(this.convenio);
-    this.finalizouAlteracao.emit();
+  public onSubmit(medicamento) {
+    this.save.emit(medicamento);    
   }
-
-  public cancelar() {
-    this.finalizouAlteracao.emit();
-  }
+  
   constructor() { }
 
   ngOnInit() {
+
+  }
+
+  ngAfterContentInit() {
+    this.form.form.setValue({
+      nome: "teste"
+    });
   }
 
 }

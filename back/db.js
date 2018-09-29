@@ -1,72 +1,58 @@
-var MongoClient = require('mongodb').MongoClient
+MongoClient = require('mongodb').MongoClient;
 
-var state = {
-  db: null,
-}
+const server = 'mongodb://localhost:27017';
+const database = 'healthy';
 
-exports.connect = function() {
-  if (state.db) {
-      return true;
-  }
-
-  MongoClient.connect('mongodb://localhost:27017/healthy', function(err, db) {
+MongoClient.connect(server, { useNewUrlParser: true }, function (err, conn) {
     if (err) {
         console.log(err);
-        return false
+        global.db = undefined;
+    } else {
+        global.db = conn.db(database);
     }
-    state.db = db;
-    return true;
-  })
+});
+
+function get(collection) {
+    if (!collection) {
+        return global.db;
+    } else {
+        return global.db.collection(collection);
+    }
 }
 
-exports.get = function() {
-  return state.db;
-}
-
-exports.close = function(done) {
-  if (state.db) {
-    state.db.close(function(err, result) {
-      state.db = null
-      state.mode = null
-      done(err)
+function find(collection, value, index, obj) {
+    var documentos;
+    global.db.collection(collection).find(value, index, obj)
+    .toArray(function(err, docs) {
+        if (err) {
+            console.log(err);
+            return undefined;
+        } else {
+            return docs;
+        }
     })
-  }
 }
 
-// const MongoClient = require('mongodb').MongoClient;
-// const assert = require('assert');
- 
-// const url = 'mongodb://localhost:27017';
-// const dbName = 'healthy';
-// var db;
- 
-// // Use connect method to connect to the server
-// MongoClient.connect(url, function(err, client) {
-//   assert.equal(null, err);
-//   console.log("Connected successfully to server");
- 
-//   db = client.db(dbName);
+function findMedicamentos(callback) {
+    global.db.collection('medicamentos').find().toArray(function(err, docs) {
+        if (err) console.log(err);
+        callback(docs);
+    })
+}
 
-//   console.log(db);
-
-//   client.close();
-// });
-
-// const insertDocuments = function(db, callback) {
-//     // Get the documents collection
-//     const collection = db.collection('documents');
-//     // Insert some documents
-//     collection.insertMany([
-//       {a : 1}, {a : 2}, {a : 3}
-//     ], function(err, result) {
-//       assert.equal(err, null);
-//       assert.equal(3, result.result.n);
-//       assert.equal(3, result.ops.length);
-//       console.log("Inserted 3 documents into the collection");
-//       callback(result);
+// function get(collection, callback) {
+//     global.db.collection(collection).find().toarray(function(err, docs) {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             callback(docs);
+//             return 'isso é um retorno.';
+//         }
 //     });
-//   }
+// }
 
-// module.exports = { function() {
-//     return db;
-// } }
+module.exports = {
+    get,
+    find,
+    findMedicamentos
+}

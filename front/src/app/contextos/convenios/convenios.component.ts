@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConveniosService } from './convenios.service';
 
 @Component({
   selector: 'app-convenios',
@@ -7,19 +8,49 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConveniosComponent implements OnInit {
 
-  public formVisible = false;
+  public showGrid = true;
+  public inserting = false;
+  public lista: any;
 
-  public showForm() {
-    this.formVisible = true;
+  public insert() {
+    this.showGrid = false;
+    this.inserting = true;
   }
 
-  public showGrid() {
-    this.formVisible = false;
+  public cancel() {
+    this.showGrid = true;
   }
 
-  constructor() { }
+  public edit() {
+    this.showGrid = false;
+    this.inserting = false;
+  }
+
+  private loadList(page) {
+    this.service.list(page)
+      .subscribe(data => this.lista = data);
+  }
+
+  public save(medicamento) {
+    let result: any;
+    if (this.inserting) {
+      result = this.service.add(medicamento);
+    } else {
+      result = this.service.edit(medicamento);
+    }
+    result.subscribe(() => this.loadList(1));
+    this.showGrid = true;
+  }
+
+  public delete(medicamento) {
+    this.service.delete(medicamento)
+      .subscribe(() => this.loadList(1));
+  }
+
+  constructor(private service: ConveniosService) { }
 
   ngOnInit() {
+    this.loadList(1);
   }
 
 }
