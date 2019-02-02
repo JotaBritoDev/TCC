@@ -1,33 +1,13 @@
 <form autocomplete="off" (ngSubmit)="onSubmit(frm.form.value)" class="form-horizontal" #frm="ngForm">
+
   <div class="form-group">
     <div class="col-sm-12">
       <label for="medicamentoInput">Nome do medicamento</label>
-    </div>
-    <div class="col-sm-12">
-      <input class="form-control" id="medicamentoInput" name="nome" placeholder="Ex.: Demerol, Lamisil, Plavix"
-        ngModel autofocus required>
+      <input class="form-control" id="medicamentoInput" name="nome" placeholder="Ex.: Demerol, Lamisil, Plavix" ngModel
+        autofocus required>
     </div>
   </div>
 
-  <div class="form-group col-sm-12">
-    <div class="d-none d-sm-block">
-      <div class="btn-toolbar mb-2 mb-md-0 btn-group">
-        <button type="submit" class="btn btn-primary" [disabled]="!frm.valid">
-          Salvar
-        </button>
-        <button type="button" class="btn btn-outline-secondary" (click)="cancel.emit()">
-          Cancelar
-        </button>
-      </div>
-    </div>
+  <app-botoes-formulario [habilitado]="frm.valid" (cancelarEvent)="cancel.emit()"></app-botoes-formulario>
 
-    <div class="form-group d-sm-none">
-      <button type="submit" class="btn btn-primary btn-block" [disabled]="!frm.valid">
-        Salvar
-      </button>
-      <button type="button" class="btn btn-outline-secondary btn-block" (click)="cancel.emit()">
-        Cancelar
-      </button>
-    </div>
-  </div>
 </form>

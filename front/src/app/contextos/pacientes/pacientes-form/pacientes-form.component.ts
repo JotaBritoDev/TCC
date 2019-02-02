@@ -14,8 +14,7 @@ import { CalculaIdadeService } from '../servicos/calcula-idade.service';
 
 @Component({
   selector: 'app-pacientes-form',
-  templateUrl: './pacientes-form.component.html',
-  styleUrls: ['./pacientes-form.component.scss']
+  templateUrl: './pacientes-form.component.html'
 })
 export class PacientesFormComponent implements OnInit {
 

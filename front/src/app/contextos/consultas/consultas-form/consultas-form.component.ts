@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-consultas-form',
-  templateUrl: './consultas-form.component.html',
-  styleUrls: ['./consultas-form.component.scss']
+  templateUrl: './consultas-form.component.html'
 })
 export class ConsultasFormComponent implements OnInit {
 

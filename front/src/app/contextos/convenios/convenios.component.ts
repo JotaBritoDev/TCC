@@ -3,8 +3,7 @@ import { ConveniosService } from './convenios.service';
 
 @Component({
   selector: 'app-convenios',
-  templateUrl: './convenios.component.html',
-  styleUrls: ['./convenios.component.scss']
+  templateUrl: './convenios.component.html'
 })
 export class ConveniosComponent implements OnInit {
 

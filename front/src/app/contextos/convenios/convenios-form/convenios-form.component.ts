@@ -1,15 +1,8 @@
-import {
-  Component,
-  OnInit, 
-  Output,
-  EventEmitter, 
-  ViewChild, 
-  AfterContentInit} from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-convenios-form',
-  templateUrl: './convenios-form.component.html',
-  styleUrls: ['./convenios-form.component.scss']
+  templateUrl: './convenios-form.component.html'
 })
 export class ConveniosFormComponent implements OnInit, AfterContentInit {
 
@@ -18,9 +11,9 @@ export class ConveniosFormComponent implements OnInit, AfterContentInit {
   @ViewChild('frm') form;
 
   public onSubmit(medicamento) {
-    this.save.emit(medicamento);    
+    this.save.emit(medicamento);
   }
-  
+
   constructor() { }
 
   ngOnInit() {
@@ -29,7 +22,7 @@ export class ConveniosFormComponent implements OnInit, AfterContentInit {
 
   ngAfterContentInit() {
     this.form.form.setValue({
-      nome: "teste"
+      nome: 'teste'
     });
   }
 

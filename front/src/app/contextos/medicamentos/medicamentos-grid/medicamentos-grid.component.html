@@ -1,20 +1,16 @@
-<div *ngIf="!lista">
+<div *ngIf="!lista || lista.length === 0">
   Nenhum medicamento cadastrado.
 </div>
 
 <div *ngIf="lista" class="table-responsive">
-
   <table class="table table-striped">
     <tbody>
       <tr *ngFor="let medicamento of lista">
-        <td class="align-middle" [id]="medicamento._id">{{ medicamento.nome }}</td>
-        <td class="text-right">
-          <button (click)="edit.emit(medicamento)" class="btn btn-xs btn-outline-info m-1">
-            <mat-icon class="align-middle">edit</mat-icon>
-          </button>
-          <button (click)="delete.emit(medicamento)" class="btn btn-md btn-outline-danger m-1">
-            <mat-icon class="align-middle">delete</mat-icon>
-          </button>
+        <td width="90%" class="align-middle" [id]="medicamento._id">
+          {{ medicamento.nome }}
+        </td>
+        <td>
+          <app-botoes-grid (editarEvento)="edit.emit(medicamento)" (excluirEvento)="delete.emit(medicamento)"></app-botoes-grid>
         </td>
       </tr>
     </tbody>

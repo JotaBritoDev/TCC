@@ -1,13 +1,8 @@
-import {
-  Component,
-  OnInit, 
-  Output,
-  EventEmitter } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-medicamentos-form',
-  templateUrl: './medicamentos-form.component.html',
-  styleUrls: ['./medicamentos-form.component.scss']
+  templateUrl: './medicamentos-form.component.html'
 })
 export class MedicamentosFormComponent implements OnInit {
 
@@ -15,7 +10,7 @@ export class MedicamentosFormComponent implements OnInit {
   @Output() save = new EventEmitter;
 
   public onSubmit(medicamento) {
-    this.save.emit(medicamento);    
+    this.save.emit(medicamento);
   }
 
   constructor() { }

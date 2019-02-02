@@ -3,14 +3,19 @@ import { MedicamentosService } from './medicamentos.service';
 
 @Component({
   selector: 'app-medicamentos',
-  templateUrl: './medicamentos.component.html',
-  styleUrls: ['./medicamentos.component.scss']
+  templateUrl: './medicamentos.component.html'
 })
 export class MedicamentosComponent implements OnInit {
 
   public showGrid = true;
   public inserting = false;
   public lista: any;
+
+  constructor(private service: MedicamentosService) { }
+
+  ngOnInit() {
+    this.loadList(1);
+  }
 
   public insert() {
     this.showGrid = false;
@@ -45,12 +50,6 @@ export class MedicamentosComponent implements OnInit {
   public delete(medicamento) {
     this.service.delete(medicamento)
       .subscribe(() => this.loadList(1));
-  }
-
-  constructor(private service: MedicamentosService) { }
-
-  ngOnInit() {
-    this.loadList(1);
   }
 
 }

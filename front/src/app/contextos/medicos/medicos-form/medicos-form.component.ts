@@ -2,8 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-medicos-form',
-  templateUrl: './medicos-form.component.html',
-  styleUrls: ['./medicos-form.component.scss']
+  templateUrl: './medicos-form.component.html'
 })
 export class MedicosFormComponent implements OnInit {
 
