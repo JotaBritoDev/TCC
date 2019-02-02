@@ -1,27 +1,29 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
-import { AgendaComponent } from './agenda/agenda.component';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material';
-import { DashboardComponent } from './dashboard/dashboard.component';
+
+import { BotoesFormularioComponent } from '../comum/botoes-formulario/botoes-formulario.component';
+import { BotoesGridComponent } from '../comum/botoes-grid/botoes-grid.component';
+import { AgendaComponent } from './agenda/agenda.component';
+import { ConsultasFormComponent } from './consultas/consultas-form/consultas-form.component';
+import { ConsultasGridComponent } from './consultas/consultas-grid/consultas-grid.component';
 import { ConsultasComponent } from './consultas/consultas.component';
-import { PacientesComponent } from './pacientes/pacientes.component';
-import { MedicosComponent } from './medicos/medicos.component';
-import { HorariosComponent } from './horarios/horarios.component';
-import { MedicamentosComponent } from './medicamentos/medicamentos.component';
-import { MedicamentosGridComponent } from './medicamentos/medicamentos-grid/medicamentos-grid.component';
-import { MedicamentosFormComponent } from './medicamentos/medicamentos-form/medicamentos-form.component';
-import { ConveniosComponent } from './convenios/convenios.component';
 import { ConveniosFormComponent } from './convenios/convenios-form/convenios-form.component';
 import { ConveniosGridComponent } from './convenios/convenios-grid/convenios-grid.component';
-import { MedicosGridComponent } from './medicos/medicos-grid/medicos-grid.component';
+import { ConveniosComponent } from './convenios/convenios.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { HorariosComponent } from './horarios/horarios.component';
+import { MedicamentosFormComponent } from './medicamentos/medicamentos-form/medicamentos-form.component';
+import { MedicamentosGridComponent } from './medicamentos/medicamentos-grid/medicamentos-grid.component';
+import { MedicamentosComponent } from './medicamentos/medicamentos.component';
 import { MedicosFormComponent } from './medicos/medicos-form/medicos-form.component';
+import { MedicosGridComponent } from './medicos/medicos-grid/medicos-grid.component';
+import { MedicosComponent } from './medicos/medicos.component';
 import { PacientesFormComponent } from './pacientes/pacientes-form/pacientes-form.component';
 import { PacientesGridComponent } from './pacientes/pacientes-grid/pacientes-grid.component';
-import { ConsultasGridComponent } from './consultas/consultas-grid/consultas-grid.component';
-import { ConsultasFormComponent } from './consultas/consultas-form/consultas-form.component';
+import { PacientesComponent } from './pacientes/pacientes.component';
 
 @NgModule({
   imports: [
@@ -48,7 +50,9 @@ import { ConsultasFormComponent } from './consultas/consultas-form/consultas-for
     PacientesFormComponent,
     PacientesGridComponent,
     ConsultasGridComponent,
-    ConsultasFormComponent
+    ConsultasFormComponent,
+    BotoesFormularioComponent,
+    BotoesGridComponent
   ],
   exports: [ ]
 })

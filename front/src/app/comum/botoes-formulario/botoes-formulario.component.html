@@ -1,0 +1,21 @@
+<div class="form-group">
+  <div class="d-none d-sm-block col-sm-6">
+    <div class="btn-toolbar mb-2 mb-md-0 btn-group">
+      <button type="submit" class="btn btn-primary" [disabled]="!habilitado" (click)="salvarEvent.emit()">
+        Salvar
+      </button>
+      <button type="button" class="btn btn-outline-secondary" (click)="cancelarEvent.emit()">
+        Cancelar
+      </button>
+    </div>
+  </div>
+
+  <div class="form-group d-sm-none">
+    <button type="submit" class="btn btn-primary btn-block" [disabled]="!habilitado" (click)="salvarEvent.emit()">
+      Salvar
+    </button>
+    <button type="button" class="btn btn-outline-secondary btn-block" (click)="cancelarEvent.emit()">
+      Cancelar
+    </button>
+  </div>
+</div>
