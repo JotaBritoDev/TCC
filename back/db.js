@@ -1,6 +1,7 @@
 MongoClient = require('mongodb').MongoClient;
 
-const server = 'mongodb://localhost:27017';
+//const server = 'mongodb://localhost:27017';
+const server = 'mongodb+srv://healthy:tcc@healthy-eb2wc.mongodb.net/test?retryWrites=true';
 const database = 'healthy';
 
 MongoClient.connect(server, { useNewUrlParser: true }, function (err, conn) {
