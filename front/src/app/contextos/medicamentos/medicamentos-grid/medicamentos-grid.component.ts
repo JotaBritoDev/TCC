@@ -8,8 +8,10 @@ import { Medicamento } from 'src/app/models/medicamento';
 export class MedicamentosGridComponent implements OnInit {
 
   @Input() lista: Medicamento[];
+  @Input() pagina: number;
   @Output() delete: EventEmitter<Medicamento> = new EventEmitter();
   @Output() edit: EventEmitter<Medicamento> = new EventEmitter();
+  @Output() changePage: EventEmitter<number> = new EventEmitter();
 
   constructor() { }
 

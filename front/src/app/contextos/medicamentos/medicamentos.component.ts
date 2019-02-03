@@ -19,6 +19,7 @@ export class MedicamentosComponent implements OnInit, OnDestroy {
   public medicamentos: Medicamento[];
   public item: Medicamento;
   public isLoading: boolean;
+  public pagina = 1;
 
   @ViewChild('grid') grid: MedicamentosGridComponent;
   @ViewChild('form') form: MedicamentosFormComponent;
@@ -29,7 +30,7 @@ export class MedicamentosComponent implements OnInit, OnDestroy {
     this.item = undefined;
     this.showGrid = true;
     this.inserting = false;
-    this.loadList(1);
+    this.loadList(this.pagina);
   }
 
   ngOnDestroy() {
@@ -53,8 +54,9 @@ export class MedicamentosComponent implements OnInit, OnDestroy {
     this.inserting = false;
   }
 
-  private loadList(page) {
+  private loadList(page: number) {
     this.isLoading = true;
+    this.pagina = page;
     setTimeout(() => {
       this.service.list(page)
         .pipe(takeUntil(this.unsubscribe))
@@ -74,7 +76,7 @@ export class MedicamentosComponent implements OnInit, OnDestroy {
       observable = this.service.edit(medicamento);
     }
     observable.pipe(takeUntil(this.unsubscribe))
-    .subscribe(() => this.loadList(1));
+    .subscribe(() => this.loadList(this.pagina));
     this.showGrid = true;
   }
 
@@ -82,7 +84,7 @@ export class MedicamentosComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.service.delete(medicamento)
       .pipe(takeUntil(this.unsubscribe))
-      .subscribe(() => this.loadList(1));
+      .subscribe(() => this.loadList(this.pagina));
   }
 
 }

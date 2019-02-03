@@ -17,6 +17,7 @@ export class MedicosComponent implements OnInit, OnDestroy {
   public medicos: Medico[];
   public item: Medico;
   public isLoading: boolean;
+  public pagina = 1;
 
   @ViewChild('grid') grid: MedicosGridComponent;
   @ViewChild('form') form: MedicosFormComponent;
@@ -27,7 +28,7 @@ export class MedicosComponent implements OnInit, OnDestroy {
     this.item = undefined;
     this.showGrid = true;
     this.inserting = false;
-    this.loadList(1);
+    this.loadList(this.pagina);
   }
 
   ngOnDestroy() {
@@ -53,6 +54,7 @@ export class MedicosComponent implements OnInit, OnDestroy {
 
   private loadList(page) {
     this.isLoading = true;
+    this.pagina = page;
     setTimeout(() => {
       this.service.list(page)
         .subscribe(data => {
@@ -70,14 +72,14 @@ export class MedicosComponent implements OnInit, OnDestroy {
     } else {
       result = this.service.edit(medico);
     }
-    result.subscribe(() => this.loadList(1));
+    result.subscribe(() => this.loadList(this.pagina));
     this.showGrid = true;
   }
 
   public delete(medico) {
     this.isLoading = true;
     this.service.delete(medico)
-      .subscribe(() => this.loadList(1));
+      .subscribe(() => this.loadList(this.pagina));
   }
 
 }

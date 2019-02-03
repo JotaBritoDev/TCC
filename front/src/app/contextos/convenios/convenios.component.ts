@@ -17,6 +17,7 @@ export class ConveniosComponent implements OnInit, OnDestroy {
   public convenios: Convenio[];
   public item: Convenio;
   public isLoading: boolean;
+  public pagina = 1;
 
   @ViewChild('grid') grid: ConveniosGridComponent;
   @ViewChild('form') form: ConveniosFormComponent;
@@ -27,7 +28,7 @@ export class ConveniosComponent implements OnInit, OnDestroy {
     this.item = undefined;
     this.showGrid = true;
     this.inserting = false;
-    this.loadList(1);
+    this.loadList(this.pagina);
   }
 
   ngOnDestroy() {
@@ -53,6 +54,7 @@ export class ConveniosComponent implements OnInit, OnDestroy {
 
   private loadList(page) {
     this.isLoading = true;
+    this.pagina = page;
     setTimeout(() => {
       this.service.list(page)
         .subscribe(data => {
@@ -70,14 +72,14 @@ export class ConveniosComponent implements OnInit, OnDestroy {
     } else {
       result = this.service.edit(convenio);
     }
-    result.subscribe(() => this.loadList(1));
+    result.subscribe(() => this.loadList(this.pagina));
     this.showGrid = true;
   }
 
   public delete(convenio) {
     this.isLoading = true;
     this.service.delete(convenio)
-      .subscribe(() => this.loadList(1));
+      .subscribe(() => this.loadList(this.pagina));
   }
 
 }

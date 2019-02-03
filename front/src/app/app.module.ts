@@ -11,6 +11,7 @@ import { ContextosModule } from './contextos/contextos.module';
 import { LoginComponent } from './login/login.component';
 import { LoadingComponent } from './comum/loading/loading.component';
 import { FormComponent } from './comum/form/form.component';
+import { PaginacaoGridComponent } from './comum/paginacao-grid/paginacao-grid.component';
 
 @NgModule({
   declarations: [

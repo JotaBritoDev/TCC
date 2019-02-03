@@ -26,6 +26,7 @@ import { PacientesGridComponent } from './pacientes/pacientes-grid/pacientes-gri
 import { PacientesComponent } from './pacientes/pacientes.component';
 import { CheckboxComponent } from '../comum/checkbox/checkbox.component';
 import { LoadingComponent } from '../comum/loading/loading.component';
+import { PaginacaoGridComponent } from '../comum/paginacao-grid/paginacao-grid.component';
 
 @NgModule({
   imports: [
@@ -57,7 +58,8 @@ import { LoadingComponent } from '../comum/loading/loading.component';
     BotoesFormularioComponent,
     BotoesGridComponent,
     CheckboxComponent,
-    LoadingComponent
+    LoadingComponent,
+    PaginacaoGridComponent
   ],
   exports: [ ]
 })
