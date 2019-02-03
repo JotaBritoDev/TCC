@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { LoadingComponent } from './comum/loading/loading.component';
 import { FormComponent } from './comum/form/form.component';
 import { PaginacaoGridComponent } from './comum/paginacao-grid/paginacao-grid.component';
+import { SemRegistroGridComponent } from './comum/sem-registro-grid/sem-registro-grid.component';
 
 @NgModule({
   declarations: [

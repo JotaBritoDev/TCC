@@ -1,0 +1,18 @@
+<div *ngIf="((!lista || lista.length === 0) && (pagina === 1))">
+  {{ textoSemRegistros }}
+</div>
+
+<div *ngIf="((!lista || lista.length === 0) && (pagina > 1))">
+  <div class="text-center">
+    <label class="text-primary" style="font-size: 2em;"><strong>Ooooops...</strong></label>
+  </div>
+  <div class="text-center">
+    <mat-icon class="text-primary" style="font-size: 8em; min-width: 1em;">link_off</mat-icon>
+  </div>
+  <div class="text-center">
+    <label class="text-primary">Não há registros nesta página.</label>
+  </div>
+  <div class="text-center">
+    <label class="text-primary">Para voltar ao início, <span (click)="voltar.emit()" style="cursor: pointer;"><u><strong>clique aqui</strong></u></span>.</label>
+  </div>
+</div>
