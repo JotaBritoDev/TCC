@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
-import { Medico } from 'src/app/models/medico';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormComponent } from 'src/app/comum/form/form.component';
+import { Medico } from 'src/app/models/medico';
 
 @Component({
   selector: 'app-medicos-form',

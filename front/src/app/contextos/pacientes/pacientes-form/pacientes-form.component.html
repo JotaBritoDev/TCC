@@ -1,108 +1,89 @@
-<form autocomplete="off" #frm="ngForm" (ngSubmit)="onSubmit(frm)" class="form-horizontal">
+<form autocomplete="off" (ngSubmit)="onSubmit(form)" [formGroup]="form">
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="pacienteInput" class="control-label">Nome *</label>
-      <input type="text" class="form-control border border-primary" id="pacienteInput" name="paciente" placeholder="Ex.: Mauro, Alan, Pedro"
-        ngModel autofocus required>
+      <input type="text" class="form-control border border-primary" id="pacienteInput" formControlName="nome"
+        placeholder="Ex.: Mauro, Alan, Pedro" autofocus required #focusObj>
     </div>
     <div class="form-group col-md-4">
       <label for="nascimentoInput" class="control-label">Data de nascimento *</label>
-      <input type="date" class="form-control border border-primary" id="nascimentoInput" name="nascimento" placeholder="01/01/2000"
-        ngModel required>
+      <input type="date" class="form-control border border-primary" id="nascimentoInput" formControlName="nascimento"
+        placeholder="01/01/2000" required>
     </div>
     <div class="form-group col-md-2">
       <label for="idadeInput" class="control-label">Idade</label>
-      <label class="form-control text-right" id="idadeInput">{{calculaIdade(frm.value.nascimento)}}</label>
+      <label class="form-control text-right" id="idadeInput">{{calculaIdade(form.value.nascimento)}}</label>
     </div>
   </div>
 
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="telefoneInput" class="control-label">Telefone *</label>
-      <input type="text" class="form-control border border-primary" id="telefoneInput" name="telefone" placeholder="Ex.: (12) 91234-0987"
-        ngModel>
+      <input type="text" class="form-control border border-primary" id="telefoneInput" formControlName="telefone"
+        placeholder="Ex.: (12) 91234-0987">
     </div>
     <div class="form-group col-md-8">
       <label for="emailInput" class="control-label">E-mail</label>
-      <input type="text" class="form-control" id="emailInput" name="email" email placeholder="Ex.: paciente@email.com"
-        ngModel>
+      <input type="text" class="form-control" id="emailInput" formControlName="email" email [placeholder]="getPlaceholder('Ex.: paciente@email.com')"
+      [ngClass]="{'is-invalid': isInvalid(form, 'email')}">
     </div>
   </div>
 
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="convenioInput" class="control-label">Convênio</label>
-      <input type="text" class="form-control" id="convenioInput" name="convenio" ngModel>
+      <select class="form-control" id="convenioInput" formControlName="convenio">
+        <option *ngIf="getConvenio()" [value]="item.convenio">{{ item.convenio }} (DESATIVADO)</option>
+        <option *ngFor="let item of convenios" [value]="item.nome">{{ item.nome }}</option>
+      </select>
     </div>
     <div class="form-group col-md-3">
-      <label for="alturaInput" class="control-label">Altura</label>
-      <input type="text" class="form-control" id="alturaInput" name="altura" placeholder="Ex.: 1,72" ngModel>
+      <label for="alturaInput" class="control-label">Altura (m)</label>
+      <input type="text" class="form-control" id="alturaInput" formControlName="altura" [placeholder]="getPlaceholder('Ex.: 1,72')">
     </div>
     <div class="form-group col-md-3">
-      <label for="pesoInput" class="control-label">Peso</label>
-      <input type="text" class="form-control" id="pesoInput" name="peso" placeholder="Ex.: 75" ngModel>
+      <label for="pesoInput" class="control-label">Peso (kg)</label>
+      <input type="text" class="form-control" id="pesoInput" formControlName="peso" [placeholder]="getPlaceholder('Ex.: 75')">
     </div>
   </div>
 
-  <div ngModelGroup="endereco">
+  <div formGroupName="endereco">
     <div class="form-row">
       <div class="form-group col-md-3">
         <label for="cepInput" class="control-label">CEP</label>
-        <input type="text" class="form-control" id="cepInput" name="cep" maxlength="9" (blur)="consultaCEP($event.target.value, frm)"
-          placeholder="Ex.: 01001-000" ngModel>
+        <input type="text" class="form-control" id="cepInput" formControlName="cep" maxlength="9" (blur)="consultaCEP($event.target.value, form)"
+        [placeholder]="getPlaceholder('Ex.: 01001-000')">
       </div>
       <div class="form-group col-md-3">
         <label for="numeroInput" class="control-label">Número</label>
-        <input type="text" class="form-control" id="numeroInput" name="numero" placeholder="Ex.: 291" ngModel>
+        <input type="text" class="form-control" id="numeroInput" formControlName="numero" [placeholder]="getPlaceholder('Ex.: 291')">
       </div>
       <div class="form-group col-md-6">
         <label for="complementoInput" class="control-label">Complemento</label>
-        <input type="text" class="form-control" id="complementoInput" name="complemento" ngModel>
+        <input type="text" class="form-control" id="complementoInput" formControlName="complemento">
       </div>
     </div>
     <div class="form-row">
       <div class="form-group col-sm-12">
         <label for="ruaInput" class="control-label">Rua</label>
-        <input type="text" class="form-control" id="ruaInput" name="rua" placeholder="Ex.: Praça da Sé" ngModel>
+        <input type="text" class="form-control" id="ruaInput" formControlName="rua" [placeholder]="getPlaceholder('Ex.: Praça da Sé')">
       </div>
     </div>
     <div class="form-row">
       <div class="form-group col-md-5">
         <label for="bairroInput" class="control-label">Bairro</label>
-        <input type="text" class="form-control" id="bairroInput" name="bairro" placeholder="Ex.: Sé" ngModel>
+        <input type="text" class="form-control" id="bairroInput" formControlName="bairro" [placeholder]="getPlaceholder('Ex.: Sé')">
       </div>
       <div class="form-group col-md-4">
         <label for="cidadeInput" class="control-label">Cidade</label>
-        <input type="text" class="form-control" id="cidadeInput" name="cidade" placeholder="Ex.: São Paulo" ngModel>
+        <input type="text" class="form-control" id="cidadeInput" formControlName="cidade" [placeholder]="getPlaceholder('Ex.: São Paulo')">
       </div>
       <div class="form-group col-md-3">
         <label for="estadoInput" class="control-label">Estado</label>
-        <input type="text" class="form-control" id="estadoInput" name="estado" placeholder="Ex.: SP" ngModel>
+        <input type="text" class="form-control" id="estadoInput" formControlName="estado" [placeholder]="getPlaceholder('Ex.: SP')">
       </div>
     </div>
   </div>
 
-  <div class="form-row">
-    <div class="form-group col-sm-12">
-      <div class="d-none d-sm-block">
-        <div class="btn-toolbar mb-2 mb-md-0 btn-group">
-          <button type="submit" class="btn btn-primary" [disabled]="!frm.valid">
-            Salvar
-          </button>
-          <button type="button" class="btn btn-outline-secondary" (click)="cancelar()">
-            Cancelar
-          </button>
-        </div>
-      </div>
-
-      <div class="form-group d-sm-none">
-        <button type="submit" class="btn btn-primary btn-block" [disabled]="!frm.valid">
-          Salvar
-        </button>
-        <button type="button" class="btn btn-outline-secondary btn-block" (click)="cancelar()">
-          Cancelar
-        </button>
-      </div>
-    </div>
-  </div>
+  <app-botoes-formulario [habilitado]="form.valid" (cancelarEvent)="cancel.emit()"></app-botoes-formulario>
 </form>

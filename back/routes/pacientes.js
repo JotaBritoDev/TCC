@@ -3,18 +3,8 @@ const ObjectId = require('mongodb').ObjectID;
 const db = require('../db');
 
 function database() {
-    return db.get('convenios');
+    return db.get('pacientes');
 }
-
-router.get('/combo', function(req, res, next) {
-    database().find( { ativo: true } )
-        .collation( { locale: 'pt' } )
-        .sort( { nome: 1 } )
-        .toArray(function(err, docs) {
-            if (err) console.log(err);
-            else res.send(docs);
-    });
-});
 
 router.get('/:pag', function(req, res, next) {
     let pagesize = 10;

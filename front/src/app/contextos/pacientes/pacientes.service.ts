@@ -1,20 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Convenio } from 'src/app/models/convenio';
+import { Paciente } from 'src/app/models/paciente';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ConveniosService {
+export class PacientesService {
 
-  private serverUrl = `${environment.API}convenios/`;
+  private serverUrl = `${environment.API}pacientes/`;
 
   constructor(private http: HttpClient) { }
 
-  public list(page): Observable<Convenio[]> {
-    return this.http.get<Convenio[]>(`${this.serverUrl}${page}`);
+  public list(page): Observable<Paciente[]> {
+    return this.http.get<Paciente[]>(`${this.serverUrl}${page}`);
   }
 
   public add(convenio): Observable<void> {
@@ -27,9 +27,5 @@ export class ConveniosService {
 
   public delete(convenio): Observable<void> {
     return this.http.delete<void>(`${this.serverUrl}${convenio._id}`);
-  }
-
-  public getCombo(): Observable<Convenio[]> {
-    return this.http.get<Convenio[]>(`${this.serverUrl}combo`);
   }
 }

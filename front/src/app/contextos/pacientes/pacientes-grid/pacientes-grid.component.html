@@ -1,3 +1,25 @@
-<p>
-  Nenhum paciente cadastrado.
-</p>
+<app-sem-registro-grid [lista]="lista" [pagina]="pagina" textoSemRegistros="Nenhum médico cadastrado." (voltar)="changePage.emit(1)"></app-sem-registro-grid>
+
+<div *ngIf="lista" class="table-responsive">
+  <table class="table table-striped">
+    <tbody>
+      <tr *ngFor="let paciente of lista">
+        <td width="90%" class="align-middle" [id]="paciente._id">
+          <div class="align-middle">
+            <strong>{{ paciente.nome }}</strong> <span *ngIf="paciente.especialidade"> - {{ paciente.especialidade }}</span>
+          </div>
+          <div>
+            <span *ngIf="paciente.email">{{ paciente.email }}</span>
+            <span *ngIf="paciente.email && paciente.telefone"> - </span>
+            <span *ngIf="paciente.telefone">{{ paciente.telefone }}</span>
+          </div>
+        </td>
+        <td>
+          <app-botoes-grid (editarEvento)="edit.emit(paciente)" (excluirEvento)="delete.emit(paciente)"></app-botoes-grid>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-paginacao-grid [lista]="lista" [pagina]="pagina" (changePage)="changePage.emit($event)"></app-paginacao-grid>
