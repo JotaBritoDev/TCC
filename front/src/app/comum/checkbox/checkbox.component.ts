@@ -11,14 +11,18 @@ export class CheckboxComponent implements OnInit {
   @Input() disabled = false;
   @Input() form: FormGroup;
   @Input() controlName: string;
+  @Input() valorInicial: boolean;
   @ViewChild('check') check: ElementRef;
 
   constructor() { }
 
   ngOnInit() {
-    const valorInicial: boolean = this.form.get(this.controlName).value;
-    this.check.nativeElement.checked = valorInicial;
-    this.form.get(this.controlName).setValue(valorInicial);
+    const vlrInicial: boolean = (this.form ? this.form.get(this.controlName).value : this.valorInicial);
+    this.check.nativeElement.checked = vlrInicial;
+
+    if (this.form) {
+      this.form.get(this.controlName).setValue(vlrInicial);
+    }
   }
 
   public getDisabled(): boolean {
@@ -26,7 +30,9 @@ export class CheckboxComponent implements OnInit {
   }
 
   public changeCheck() {
-    this.form.get(this.controlName).setValue(this.check.nativeElement.checked);
+    if (this.form) {
+      this.form.get(this.controlName).setValue(this.check.nativeElement.checked);
+    }
   }
 
 }

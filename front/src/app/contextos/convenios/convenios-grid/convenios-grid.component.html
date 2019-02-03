@@ -7,6 +7,7 @@
     <tbody>
       <tr *ngFor="let convenio of lista">
         <td width="90%" class="align-middle" [id]="convenio._id">
+          <app-checkbox [valorInicial]="convenio.ativo" disabled="true" texto=""></app-checkbox>
           {{ convenio.nome }}
         </td>
         <td>

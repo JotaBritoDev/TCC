@@ -1,4 +1,4 @@
-<div class="pretty p-icon p-curve p-smooth p-pulse mr-2 align-middle" style="font-size:30px;">
+<div class="pretty p-icon p-curve mr-2 align-middle" [ngClass]="{'p-pulse p-smooth': !getDisabled()}" style="font-size:30px;">
   <input type="checkbox" id="convenioAtivo" class="form-check-input" (change)="changeCheck()" [disabled]="getDisabled()" #check>
   <div class="state p-primary-o">
     <mat-icon class="icon">done</mat-icon>
