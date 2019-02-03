@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material';
 
 import { BotoesFormularioComponent } from '../comum/botoes-formulario/botoes-formulario.component';
@@ -24,13 +24,16 @@ import { MedicosComponent } from './medicos/medicos.component';
 import { PacientesFormComponent } from './pacientes/pacientes-form/pacientes-form.component';
 import { PacientesGridComponent } from './pacientes/pacientes-grid/pacientes-grid.component';
 import { PacientesComponent } from './pacientes/pacientes.component';
+import { CheckboxComponent } from '../comum/checkbox/checkbox.component';
+import { LoadingComponent } from '../comum/loading/loading.component';
 
 @NgModule({
   imports: [
     CommonModule,
     MatIconModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   declarations: [
     AgendaComponent,
@@ -52,7 +55,9 @@ import { PacientesComponent } from './pacientes/pacientes.component';
     ConsultasGridComponent,
     ConsultasFormComponent,
     BotoesFormularioComponent,
-    BotoesGridComponent
+    BotoesGridComponent,
+    CheckboxComponent,
+    LoadingComponent
   ],
   exports: [ ]
 })

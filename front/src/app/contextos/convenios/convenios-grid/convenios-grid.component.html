@@ -3,18 +3,14 @@
 </div>
 
 <div *ngIf="lista" class="table-responsive">
-
   <table class="table table-striped">
     <tbody>
       <tr *ngFor="let convenio of lista">
-        <td class="align-middle" [id]="convenio._id">{{ convenio.nome }}</td>
-        <td class="text-right">
-          <button (click)="edit.emit(convenio)" class="btn btn-xs btn-outline-info m-1">
-            <mat-icon class="align-middle">edit</mat-icon>
-          </button>
-          <button (click)="delete.emit(convenio)" class="btn btn-md btn-outline-danger m-1">
-            <mat-icon class="align-middle">delete</mat-icon>
-          </button>
+        <td width="90%" class="align-middle" [id]="convenio._id">
+          {{ convenio.nome }}
+        </td>
+        <td>
+          <app-botoes-grid (editarEvento)="edit.emit(convenio)" (excluirEvento)="delete.emit(convenio)"></app-botoes-grid>
         </td>
       </tr>
     </tbody>

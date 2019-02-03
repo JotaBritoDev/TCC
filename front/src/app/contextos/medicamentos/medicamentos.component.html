@@ -8,7 +8,9 @@
   </div>
 </div>
 
-<div>
-  <app-medicamentos-grid [lista]="lista" (delete)="delete($event)" (edit)="edit($event)" *ngIf="showGrid"></app-medicamentos-grid>
-  <app-medicamentos-form *ngIf="!showGrid" (cancel)="cancel()" (save)="save($event)"></app-medicamentos-form>
+<div *ngIf="!isLoading">
+  <app-medicamentos-grid #grid *ngIf="showGrid" [lista]="medicamentos" (delete)="delete($event)" (edit)="edit($event)"></app-medicamentos-grid>
+  <app-medicamentos-form #form *ngIf="!showGrid" [item]="item" (cancel)="cancel()" (save)="save($event)"></app-medicamentos-form>
 </div>
+
+<app-loading [loading]="isLoading"></app-loading>

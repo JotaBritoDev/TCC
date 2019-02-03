@@ -1,17 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ConveniosService } from './convenios.service';
+import { Subject, Observable } from 'rxjs';
+import { Convenio } from 'src/app/models/convenio';
+import { ConveniosGridComponent } from './convenios-grid/convenios-grid.component';
+import { ConveniosFormComponent } from './convenios-form/convenios-form.component';
 
 @Component({
   selector: 'app-convenios',
   templateUrl: './convenios.component.html'
 })
-export class ConveniosComponent implements OnInit {
+export class ConveniosComponent implements OnInit, OnDestroy {
 
-  public showGrid = true;
-  public inserting = false;
-  public lista: any;
+  private unsubscribe: Subject<void> = new Subject<void>();
+  public showGrid: boolean;
+  public inserting: boolean;
+  public convenios: Convenio[];
+  public item: Convenio;
+  public isLoading: boolean;
+
+  @ViewChild('grid') grid: ConveniosGridComponent;
+  @ViewChild('form') form: ConveniosFormComponent;
+
+  constructor(private service: ConveniosService) { }
+
+  ngOnInit() {
+    this.item = undefined;
+    this.showGrid = true;
+    this.inserting = false;
+    this.loadList(1);
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+  }
 
   public insert() {
+    this.item = undefined;
     this.showGrid = false;
     this.inserting = true;
   }
@@ -20,36 +45,39 @@ export class ConveniosComponent implements OnInit {
     this.showGrid = true;
   }
 
-  public edit() {
+  public edit(convenio: Convenio) {
+    this.item = convenio;
     this.showGrid = false;
     this.inserting = false;
   }
 
   private loadList(page) {
-    this.service.list(page)
-      .subscribe(data => this.lista = data);
+    this.isLoading = true;
+    setTimeout(() => {
+      this.service.list(page)
+        .subscribe(data => {
+          this.convenios = data;
+          this.isLoading = false;
+        });
+    }, 500);
   }
 
-  public save(medicamento) {
-    let result: any;
+  public save(convenio) {
+    this.isLoading = true;
+    let result: Observable<void>;
     if (this.inserting) {
-      result = this.service.add(medicamento);
+      result = this.service.add(convenio);
     } else {
-      result = this.service.edit(medicamento);
+      result = this.service.edit(convenio);
     }
     result.subscribe(() => this.loadList(1));
     this.showGrid = true;
   }
 
-  public delete(medicamento) {
-    this.service.delete(medicamento)
+  public delete(convenio) {
+    this.isLoading = true;
+    this.service.delete(convenio)
       .subscribe(() => this.loadList(1));
-  }
-
-  constructor(private service: ConveniosService) { }
-
-  ngOnInit() {
-    this.loadList(1);
   }
 
 }

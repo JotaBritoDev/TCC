@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { first } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Convenio } from 'src/app/models/convenio';
 
 import { environment } from '../../../environments/environment';
 
@@ -13,31 +14,19 @@ export class ConveniosService {
 
   constructor(private http: HttpClient) { }
 
-  public list(page) {
-    return this.http.get(`${this.serverUrl}${page}`)
-      .pipe(
-        first()
-      );
+  public list(page): Observable<Convenio[]> {
+    return this.http.get<Convenio[]>(`${this.serverUrl}${page}`);
   }
 
-  public add(medicamento) {
-    return this.http.post(this.serverUrl, medicamento)
-      .pipe(
-        first()
-      );
+  public add(convenio): Observable<void> {
+    return this.http.post<void>(this.serverUrl, convenio);
   }
 
-  public edit(medicamento) {
-    return this.http.put(`${this.serverUrl}${medicamento._id}`, medicamento)
-      .pipe(
-        first()
-      );
+  public edit(convenio): Observable<void> {
+    return this.http.put<void>(`${this.serverUrl}${convenio._id}`, convenio);
   }
 
-  public delete(medicamento) {
-    return this.http.delete(`${this.serverUrl}${medicamento._id}`)
-      .pipe(
-        first()
-      );
+  public delete(convenio): Observable<void> {
+    return this.http.delete<void>(`${this.serverUrl}${convenio._id}`);
   }
 }

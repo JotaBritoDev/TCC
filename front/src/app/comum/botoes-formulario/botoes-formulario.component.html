@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="form-group row mt-4">
   <div class="d-none d-sm-block col-sm-6">
     <div class="btn-toolbar mb-2 mb-md-0 btn-group">
       <button type="submit" class="btn btn-primary" [disabled]="!habilitado" (click)="salvarEvent.emit()">
@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  <div class="form-group d-sm-none">
+  <div class="d-sm-none col-12">
     <button type="submit" class="btn btn-primary btn-block" [disabled]="!habilitado" (click)="salvarEvent.emit()">
       Salvar
     </button>

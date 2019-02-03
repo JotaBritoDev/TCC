@@ -10,11 +10,11 @@
   </div>
 
   <div *ngIf="confirmaExclusao" class="btn-toolbar btn-group">
+    <button (click)="excluirEvento.emit(medicamento)" class="btn btn-danger">
+      <mat-icon class="align-middle">delete</mat-icon>
+    </button>
     <button (click)="confirmaExclusao=false" class="btn btn-outline-secondary">
       <mat-icon class="align-middle">highlight_off</mat-icon>
-    </button>
-    <button (click)="excluirEvento.emit(medicamento)" class="btn btn-primary">
-      <mat-icon class="align-middle">check_circle_outline</mat-icon>
     </button>
   </div>
 

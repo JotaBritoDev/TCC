@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Medicamento } from 'src/app/models/medicamento';
 
 @Component({
   selector: 'app-medicamentos-grid',
@@ -6,9 +7,9 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class MedicamentosGridComponent implements OnInit {
 
-  @Input() lista: [];
-  @Output() delete = new EventEmitter;
-  @Output() edit = new EventEmitter;
+  @Input() lista: Medicamento[];
+  @Output() delete: EventEmitter<Medicamento> = new EventEmitter();
+  @Output() edit: EventEmitter<Medicamento> = new EventEmitter();
 
   constructor() { }
 
