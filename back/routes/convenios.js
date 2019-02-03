@@ -1,35 +1,43 @@
-var express = require('express');
-var router = express.Router();
-var ObjectId = require('mongodb').ObjectID;
-var db = require('../db');
+const router = require('express').Router();
+const ObjectId = require('mongodb').ObjectID;
+const db = require('../db');
+
+function database() {
+    return db.get('convenios');
+}
 
 router.get('/:pag', function(req, res, next) {
     let pagesize = 10;
     let n = req.params.pag;
     
-    db.get('convenios').find()
-        .sort( { nome: 1 } )
+    database().find()
         .skip(pagesize*(n-1))
         .limit(pagesize)
         .toArray(function(err, docs) {
             if (err) console.log(err);
-            else res.send(docs);
+            else {
+                console.log(docs);
+                res.send(docs.sort((a, b) => {
+                    return a.nome.toUpperCase() > b.nome.toUpperCase() ? 1 : -1;
+                  }));
+            }
     });
 });
 
 router.post('/', function(req, res, next) {
-    db.get('convenios').insertOne( req.body );
+    delete req.body._id;
+    database().insertOne( req.body );
     res.send(req.body);
 });
 
 router.delete('/:id', function(req, res, next) {
-    db.get('convenios').deleteOne( { _id: ObjectId(req.params.id) } );
+    database().deleteOne( { _id: ObjectId(req.params.id) } );
     res.send(req.body);
 });
 
-router.delete('/:id', function(req, res, next) {
-    db.get('convenios').deleteOne( { _id: ObjectId(req.params.id) } );
-    db.get('convenios').insertOne( req.body );
+router.put('/:id', function(req, res, next) {
+    delete req.body._id;
+    database().updateOne( { _id: ObjectId(req.params.id) }, { $set: req.body } );
     res.send(req.body);
 });
 
