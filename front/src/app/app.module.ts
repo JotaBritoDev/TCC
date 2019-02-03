@@ -10,11 +10,13 @@ import { AppComponent } from './app.component';
 import { ContextosModule } from './contextos/contextos.module';
 import { LoginComponent } from './login/login.component';
 import { LoadingComponent } from './comum/loading/loading.component';
+import { FormComponent } from './comum/form/form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    FormComponent
   ],
   imports: [
     BrowserModule,

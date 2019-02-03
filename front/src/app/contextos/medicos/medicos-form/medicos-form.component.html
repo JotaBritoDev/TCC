@@ -1,52 +1,52 @@
-<form autocomplete="off" #frm="ngForm" (ngSubmit)="onSubmit(frm)" class="form-horizontal">
+<form autocomplete="off" (ngSubmit)="onSubmit(form)" [formGroup]="form">
   <div class="form-row">
     <div class="form-group col-md-8">
       <label for="medicoInput" class="control-label">Nome *</label>
-      <input type="text" class="form-control border border-primary" id="medicoInput" name="medico" placeholder="Ex.: Daniel, João, Paulo"
-        ngModel autofocus required>
+      <input type="text" class="form-control border border-primary" id="medicoInput" formControlName="nome" placeholder="Ex.: Daniel, João, Paulo"
+         autofocus required #focusObj>
     </div>
     <div class="form-group col-md-4">
       <label for="nascimentoInput" class="control-label">Data de nascimento *</label>
-      <input type="date" class="form-control border border-primary" id="nascimentoInput" name="nascimento" placeholder="01/01/2000"
-        ngModel required>
+      <input type="date" class="form-control border border-primary" id="nascimentoInput" formControlName="nascimento" placeholder="01/01/2000"
+         required>
     </div>
   </div>
 
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="telefoneInput" class="control-label">Telefone</label>
-      <input type="text" class="form-control" id="telefoneInput" name="telefone" placeholder="Ex.: (12) 91234-0987"
-        ngModel>
+      <input type="text" class="form-control" id="telefoneInput" formControlName="telefone" [placeholder]="getPlaceholder('Ex.: (12) 91234-0987')"
+        >
     </div>
     <div class="form-group col-md-8">
       <label for="emailInput" class="control-label">E-mail</label>
-      <input type="text" class="form-control" id="emailInput" name="email" email placeholder="Ex.: paciente@email.com"
-        ngModel>
+      <input type="text" class="form-control" id="emailInput" formControlName="email" email [placeholder]="getPlaceholder('Ex.: paciente@email.com')"
+      [ngClass]="{'is-invalid': isInvalid(form, 'email')}">
     </div>
   </div>
 
   <div class="form-row">
     <div class="form-group col-md-7">
       <label for="especialidadeInput" class="control-label">Especialidade</label>
-      <input type="text" class="form-control" id="especialidadeInput" name="especialidade" placeholder="Ex.: Ortopedista, Clínico geral"
-        ngModel>
+      <input type="text" class="form-control" id="especialidadeInput" formControlName="especialidade" [placeholder]="getPlaceholder('Ex.: Ortopedista, Clínico geral')"
+        >
     </div>
     <div class="form-group col-md-5">
       <label for="crmInput" class="control-label">CRM *</label>
-      <input type="text" class="form-control border border-primary" id="crmInput" name="crm" placeholder="Ex.: 33385"
-        ngModel required>
+      <input type="text" class="form-control border border-primary" id="crmInput" formControlName="crm" placeholder="Ex.: 33385"
+         required>
     </div>
   </div>
 
   <div class="form-row">
     <div class="form-group col-sm-12">
-      <label for="restricoesInput" class="control-label">Restições</label>
-      <textarea class="form-control" rows="4" id="restricoesInput" name="restricoes" placeholder="Ex.: Atende apenas no período da tarde e não atende terça-feira."
-        ngModel></textarea>
+      <label for="restricoesInput" class="control-label">Restrições</label>
+      <textarea class="form-control" rows="4" id="restricoesInput" formControlName="restricoes" [placeholder]="getPlaceholder('Ex.: Atende apenas no período da tarde e não atende terça-feira.')"
+        ></textarea>
     </div>
   </div>
 
-  <div class="form-row">
+  <!-- <div class="form-row">
     <div class="form-group col-sm-12">
       <div class="d-none d-sm-block">
         <div class="btn-toolbar mb-2 mb-md-0 btn-group">
@@ -68,5 +68,8 @@
         </button>
       </div>
     </div>
-  </div>
+  </div> -->
+
+  <app-botoes-formulario [habilitado]="form.valid" (cancelarEvent)="cancel.emit()"></app-botoes-formulario>
+
 </form>

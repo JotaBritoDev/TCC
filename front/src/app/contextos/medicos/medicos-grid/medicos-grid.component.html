@@ -1,3 +1,26 @@
-<p>
+<div *ngIf="(!lista) || (lista.length==0)">
   Nenhum médico cadastrado.
-</p>
+</div>
+
+<div *ngIf="lista" class="table-responsive">
+  <table class="table table-striped">
+    <tbody>
+      <tr *ngFor="let medico of lista">
+        <td width="90%" class="align-middle" [id]="medico._id">
+          <div class="align-middle">
+            <mat-icon *ngIf="medico.restricoes" class="align-middle mr-2 mb-1" color="primary" [title]="'RESTRIÇÕES\n' + medico.restricoes">info_outline</mat-icon>
+            <strong>{{ medico.nome }}</strong> <span *ngIf="medico.especialidade"> - {{ medico.especialidade }}</span>
+          </div>
+          <div>
+            <span *ngIf="medico.email">{{ medico.email }}</span>
+            <span *ngIf="medico.email && medico.telefone"> - </span>
+            <span *ngIf="medico.telefone">{{ medico.telefone }}</span>
+          </div>
+        </td>
+        <td>
+          <app-botoes-grid (editarEvento)="edit.emit(medico)" (excluirEvento)="delete.emit(medico)"></app-botoes-grid>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

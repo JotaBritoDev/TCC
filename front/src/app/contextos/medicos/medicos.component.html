@@ -1,14 +1,16 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-1 mb-3 border-bottom">
   <h3 class="h3 my-0 pt-2 mr-3">Médicos</h3>
   <div class="btn-toolbar mb-md-0">
-    <button class="btn btn-primary" *ngIf="!formVisible" (click)="showForm()">
+    <button class="btn btn-primary" *ngIf="!formVisible" (click)="insert()">
       <mat-icon class="align-middle">person_add</mat-icon>
       <div class="d-none d-sm-inline-block ml-2">Novo</div>
     </button>
   </div>
 </div>
 
-<div>
-    <app-medicos-grid *ngIf="!formVisible"></app-medicos-grid>
-    <app-medicos-form *ngIf="formVisible" (finalizouAlteracao)="showGrid()"></app-medicos-form>
+<div *ngIf="!isLoading">
+    <app-medicos-grid #grid *ngIf="showGrid" [lista]="medicos" (delete)="delete($event)" (edit)="edit($event)"></app-medicos-grid>
+    <app-medicos-form #form *ngIf="!showGrid" [item]="item" (cancel)="cancel()" (save)="save($event)"></app-medicos-form>
 </div>
+
+<app-loading [loading]="isLoading"></app-loading>

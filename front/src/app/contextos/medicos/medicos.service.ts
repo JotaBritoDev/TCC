@@ -1,20 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Convenio } from 'src/app/models/convenio';
+import { Medico } from 'src/app/models/medico';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ConveniosService {
+export class MedicosService {
 
-  private serverUrl = `${environment.API}convenios/`;
+  private serverUrl = `${environment.API}medicos/`;
 
   constructor(private http: HttpClient) { }
 
-  public list(page): Observable<Convenio[]> {
-    return this.http.get<Convenio[]>(`${this.serverUrl}${page}`);
+  public list(page): Observable<Medico[]> {
+    return this.http.get<Medico[]>(`${this.serverUrl}${page}`);
   }
 
   public add(convenio): Observable<void> {
