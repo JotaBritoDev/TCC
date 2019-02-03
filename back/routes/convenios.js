@@ -11,16 +11,13 @@ router.get('/:pag', function(req, res, next) {
     let n = req.params.pag;
     
     database().find()
+        .collation( { locale: 'pt' } )
+        .sort( { nome: 1 } )
         .skip(pagesize*(n-1))
         .limit(pagesize)
         .toArray(function(err, docs) {
             if (err) console.log(err);
-            else {
-                console.log(docs);
-                res.send(docs.sort((a, b) => {
-                    return a.nome.toUpperCase() > b.nome.toUpperCase() ? 1 : -1;
-                  }));
-            }
+            else res.send(docs);
     });
 });
 
