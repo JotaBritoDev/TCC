@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Convenio } from 'src/app/models/convenio';
 
@@ -11,6 +11,7 @@ export class ConveniosFormComponent implements OnInit {
   @Input() item: Convenio;
   @Output() cancel = new EventEmitter;
   @Output() save = new EventEmitter;
+  @ViewChild('focusObj') focusObj: ElementRef;
 
   public form: FormGroup;
 
@@ -22,6 +23,10 @@ export class ConveniosFormComponent implements OnInit {
       nome: [this.item ? this.item.nome : ''],
       ativo: [this.item ? this.item.ativo : true]
     });
+
+    setTimeout(() => {
+      this.focusObj.nativeElement.focus();
+    }, 100);
   }
 
   public onSubmit() {
