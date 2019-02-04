@@ -1,9 +1,12 @@
 {
     "name": "healthy",
     "version": "1.0.0",
+    "description": "",
+    "main": "./back/app.js",
     "scripts": {
-        "prestart": "cd front && npm install && ng build --prod && cd ..",
+        "preinstall": "cd front && npm install && ng build --prod && cd ../back && npm install",
+        "install": "(rm -R ../app-realhealthy-com-br/* || true) && (cp -R ./back/ ../app-realhealthy-com-br/)",
+        "prestart": "cd front && npm install && ng build",
         "start": "cd back && npm install && npm start"
     }
-  }
-  
+}
