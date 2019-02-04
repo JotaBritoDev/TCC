@@ -76,6 +76,7 @@ export class MedicosComponent implements OnInit, OnDestroy {
     }
     result.subscribe(() => this.loadList(this.pagina));
     this.showGrid = true;
+    this.ultimoFiltro = '';
   }
 
   public delete(medico) {

@@ -80,6 +80,7 @@ export class MedicamentosComponent implements OnInit, OnDestroy {
     observable.pipe(takeUntil(this.unsubscribe))
     .subscribe(() => this.loadList(this.pagina));
     this.showGrid = true;
+    this.ultimoFiltro = '';
   }
 
   public delete(medicamento) {

@@ -76,6 +76,7 @@ export class ConveniosComponent implements OnInit, OnDestroy {
     }
     result.subscribe(() => this.loadList(this.pagina));
     this.showGrid = true;
+    this.ultimoFiltro = '';
   }
 
   public delete(convenio) {
