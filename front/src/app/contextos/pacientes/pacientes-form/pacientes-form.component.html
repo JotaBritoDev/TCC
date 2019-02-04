@@ -32,10 +32,18 @@
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="convenioInput" class="control-label">Convênio</label>
-      <select class="form-control" id="convenioInput" formControlName="convenio">
-        <option *ngIf="getConvenio()" [value]="item.convenio">{{ item.convenio }} (DESATIVADO)</option>
-        <option *ngFor="let item of convenios" [value]="item.nome">{{ item.nome }}</option>
-      </select>
+
+      <div class="input-group mb-2 mr-sm-2 border rounded">
+        <div class="input-group-prepend mr-1">
+          <div class="input-group-text bg-selected border-0">
+            <mat-icon class="text-white">business_center</mat-icon>
+          </div>
+        </div>
+        <select class="form-control border border-0" id="convenioInput" formControlName="convenio">
+          <option *ngIf="getConvenio()" [value]="item.convenio">{{ item.convenio }} (DESATIVADO)</option>
+          <option *ngFor="let item of convenios" [value]="item.nome">{{ item.nome }}</option>
+        </select>      
+      </div>
     </div>
     <div class="form-group col-md-3">
       <label for="alturaInput" class="control-label">Altura (m)</label>

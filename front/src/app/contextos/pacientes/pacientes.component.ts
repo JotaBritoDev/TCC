@@ -47,7 +47,6 @@ export class PacientesComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(data => {
         this.conveniosCombo = data;
-        console.log(data);
       });
   }
 
