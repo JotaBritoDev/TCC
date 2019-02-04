@@ -1,0 +1,9 @@
+{
+    "name": "healthy",
+    "version": "1.0.0",
+    "scripts": {
+        "prestart": "cd front && npm install && ng build --prod && cd ..",
+        "start": "cd back && npm install && npm start"
+    }
+  }
+  

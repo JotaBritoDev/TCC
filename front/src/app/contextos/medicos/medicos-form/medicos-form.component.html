@@ -1,4 +1,4 @@
-<form autocomplete="off" (ngSubmit)="onSubmit(form)" [formGroup]="form">
+<form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
   <div class="form-row">
     <div class="form-group col-md-8">
       <label for="medicoInput" class="control-label">Nome *</label>
@@ -20,7 +20,7 @@
     </div>
     <div class="form-group col-md-8">
       <label for="emailInput" class="control-label">E-mail</label>
-      <input type="text" class="form-control" id="emailInput" formControlName="email" email [placeholder]="getPlaceholder('Ex.: paciente@email.com')"
+      <input type="text" class="form-control" id="emailInput" formControlName="email" email [placeholder]="getPlaceholder('Ex.: medico@email.com')"
       [ngClass]="{'is-invalid': isInvalid(form, 'email')}">
     </div>
   </div>

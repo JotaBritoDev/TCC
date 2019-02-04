@@ -14,6 +14,7 @@ var pacientesRouter = require('./routes/pacientes');
 var cors = require('cors')
 var app = express();
 
+app.disable('x-powered-by');
 app.use(cors());
 
 // view engine setup
@@ -24,14 +25,18 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../front/dist/front/')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/medicamentos', medicamentosRouter);
-app.use('/convenios', conveniosRouter);
-app.use('/medicos', medicosRouter);
-app.use('/pacientes', pacientesRouter);
+app.use('/api/v1', indexRouter);
+app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/medicamentos', medicamentosRouter);
+app.use('/api/v1/convenios', conveniosRouter);
+app.use('/api/v1/medicos', medicosRouter);
+app.use('/api/v1/pacientes', pacientesRouter);
+
+app.get('/', function(req, res, next) {
+  res.send('API DOCS');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

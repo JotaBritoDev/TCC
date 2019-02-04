@@ -11,7 +11,7 @@ export class PacientesGridComponent implements OnInit {
   @Input() pagina: number;
   @Output() delete: EventEmitter<Paciente> = new EventEmitter();
   @Output() edit: EventEmitter<Paciente> = new EventEmitter();
-  @Output() changePage: EventEmitter<Paciente> = new EventEmitter();
+  @Output() changePage: EventEmitter<number> = new EventEmitter();
 
   constructor() { }
 
