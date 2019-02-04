@@ -13,7 +13,7 @@ import { LoadingComponent } from './comum/loading/loading.component';
 import { FormComponent } from './comum/form/form.component';
 import { PaginacaoGridComponent } from './comum/paginacao-grid/paginacao-grid.component';
 import { SemRegistroGridComponent } from './comum/sem-registro-grid/sem-registro-grid.component';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,9 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [
+    {provide: LocationStrategy, useClass: PathLocationStrategy}
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

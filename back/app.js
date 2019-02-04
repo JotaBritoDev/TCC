@@ -34,8 +34,13 @@ app.use('/api/v1/convenios', conveniosRouter);
 app.use('/api/v1/medicos', medicosRouter);
 app.use('/api/v1/pacientes', pacientesRouter);
 
-app.get('/', function(req, res, next) {
+app.get('/api-docs', function(req, res, next) {
   res.send('API DOCS');
+});
+
+app.all('/*', function(req, res, next) {
+  console.log(req);
+  res.sendFile('public/index.html', { root: __dirname });
 });
 
 // catch 404 and forward to error handler
