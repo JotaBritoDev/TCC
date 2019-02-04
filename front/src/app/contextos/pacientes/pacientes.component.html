@@ -1,6 +1,9 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-1 mb-3 border-bottom">
   <h3 class="h3 my-0 pt-2 mr-3">Pacientes</h3>
   <div class="btn-toolbar mb-md-0">
+    <div class="mr-2">
+      <input type="text" *ngIf="showGrid" [ngClass]="{'border border-primary': filtro.value}" class="form-control" placeholder="Filtrar cliente" (keyup.enter)="filtrar()" (blur)="filtrar()" (focus)="limparFiltro()" #filtro>
+    </div>
     <button class="btn btn-primary" *ngIf="showGrid" (click)="insert()">
       <mat-icon class="align-middle">person_add</mat-icon>
       <div class="d-none d-sm-inline-block ml-2">Novo</div>

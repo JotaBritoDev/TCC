@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { Paciente } from 'src/app/models/paciente';
 import { PacientesGridComponent } from './pacientes-grid/pacientes-grid.component';
@@ -22,9 +22,11 @@ export class PacientesComponent implements OnInit, OnDestroy {
   public isLoading: boolean;
   public pagina = 1;
   public conveniosCombo: Convenio[];
+  public ultimoFiltro: string;
 
   @ViewChild('grid') grid: PacientesGridComponent;
   @ViewChild('form') form: PacientesFormComponent;
+  @ViewChild('filtro') filtro: ElementRef;
 
   constructor(private service: PacientesService,
     private conveniosService: ConveniosService) { }
@@ -33,7 +35,7 @@ export class PacientesComponent implements OnInit, OnDestroy {
     this.item = undefined;
     this.showGrid = true;
     this.inserting = false;
-    this.loadList(this.pagina);
+    this.loadList(this.pagina, this.getFiltro());
     this.loadCombo();
   }
 
@@ -66,11 +68,11 @@ export class PacientesComponent implements OnInit, OnDestroy {
     this.inserting = false;
   }
 
-  private loadList(page) {
+  private loadList(page, filtro) {
     this.isLoading = true;
     this.pagina = page;
     setTimeout(() => {
-      this.service.list(page)
+      this.service.list(page, filtro)
         .subscribe(data => {
           this.pacientes = data;
           this.isLoading = false;
@@ -86,14 +88,30 @@ export class PacientesComponent implements OnInit, OnDestroy {
     } else {
       result = this.service.edit(medico);
     }
-    result.subscribe(() => this.loadList(this.pagina));
+    result.subscribe(() => this.loadList(this.pagina, this.getFiltro()));
     this.showGrid = true;
   }
 
   public delete(medico) {
     this.isLoading = true;
     this.service.delete(medico)
-      .subscribe(() => this.loadList(this.pagina));
+      .subscribe(() => this.loadList(this.pagina, this.getFiltro()));
+  }
+
+  private getFiltro(): string {
+    return this.filtro ? this.filtro.nativeElement.value : '';
+  }
+
+  public filtrar() {
+    const novoFiltro = this.getFiltro();
+    if (this.ultimoFiltro !== novoFiltro) {
+      this.loadList(1, novoFiltro);
+      this.ultimoFiltro = novoFiltro;
+    }
+  }
+
+  public limparFiltro() {
+    this.ultimoFiltro = '';
   }
 
 }

@@ -13,19 +13,24 @@ export class PacientesService {
 
   constructor(private http: HttpClient) { }
 
-  public list(page): Observable<Paciente[]> {
-    return this.http.get<Paciente[]>(`${this.serverUrl}${page}`);
+  public list(page: number, filter: string): Observable<Paciente[]> {
+    if (filter) {
+      return this.http.get<Paciente[]>(`${this.serverUrl}${page}/${filter}`);
+    } else {
+      return this.http.get<Paciente[]>(`${this.serverUrl}${page}`);
+    }
   }
 
-  public add(convenio): Observable<void> {
-    return this.http.post<void>(this.serverUrl, convenio);
+  public add(paciente: Paciente): Observable<void> {
+    return this.http.post<void>(this.serverUrl, paciente);
   }
 
-  public edit(convenio): Observable<void> {
-    return this.http.put<void>(`${this.serverUrl}${convenio._id}`, convenio);
+  public edit(paciente: Paciente): Observable<void> {
+    return this.http.put<void>(`${this.serverUrl}${paciente._id}`, paciente);
   }
 
-  public delete(convenio): Observable<void> {
-    return this.http.delete<void>(`${this.serverUrl}${convenio._id}`);
+  public delete(paciente: Paciente): Observable<void> {
+    return this.http.delete<void>(`${this.serverUrl}${paciente._id}`);
   }
+
 }
