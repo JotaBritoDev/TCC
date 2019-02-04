@@ -35,7 +35,7 @@ export class PacientesComponent implements OnInit, OnDestroy {
     this.item = undefined;
     this.showGrid = true;
     this.inserting = false;
-    this.loadList(this.pagina, this.getFiltro());
+    this.loadList(this.pagina);
     this.loadCombo();
   }
 
@@ -68,11 +68,11 @@ export class PacientesComponent implements OnInit, OnDestroy {
     this.inserting = false;
   }
 
-  private loadList(page, filtro) {
+  private loadList(page) {
     this.isLoading = true;
     this.pagina = page;
     setTimeout(() => {
-      this.service.list(page, filtro)
+      this.service.list(page, this.getFiltro())
         .subscribe(data => {
           this.pacientes = data;
           this.isLoading = false;
@@ -88,14 +88,14 @@ export class PacientesComponent implements OnInit, OnDestroy {
     } else {
       result = this.service.edit(medico);
     }
-    result.subscribe(() => this.loadList(this.pagina, this.getFiltro()));
+    result.subscribe(() => this.loadList(this.pagina));
     this.showGrid = true;
   }
 
   public delete(medico) {
     this.isLoading = true;
     this.service.delete(medico)
-      .subscribe(() => this.loadList(this.pagina, this.getFiltro()));
+      .subscribe(() => this.loadList(this.pagina));
   }
 
   private getFiltro(): string {
@@ -105,13 +105,9 @@ export class PacientesComponent implements OnInit, OnDestroy {
   public filtrar() {
     const novoFiltro = this.getFiltro();
     if (this.ultimoFiltro !== novoFiltro) {
-      this.loadList(1, novoFiltro);
+      this.loadList(1);
       this.ultimoFiltro = novoFiltro;
     }
-  }
-
-  public limparFiltro() {
-    this.ultimoFiltro = '';
   }
 
 }

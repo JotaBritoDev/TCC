@@ -13,21 +13,25 @@ export class MedicamentosService {
 
   private serverUrl = `${environment.API}medicamentos/`;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  public list(page: number): Observable<Medicamento[]> {
-    return this.httpClient.get<Medicamento[]>(`${this.serverUrl}${page}`);
+  public list(page: number, filter: string): Observable<Medicamento[]> {
+    if (filter) {
+      return this.http.get<Medicamento[]>(`${this.serverUrl}${page}/${filter}`);
+    } else {
+      return this.http.get<Medicamento[]>(`${this.serverUrl}${page}`);
+    }
   }
 
   public add(medicamento): Observable<void> {
-    return this.httpClient.post<void>(this.serverUrl, medicamento);
+    return this.http.post<void>(this.serverUrl, medicamento);
   }
 
   public edit(medicamento): Observable<void> {
-    return this.httpClient.put<void>(`${this.serverUrl}${medicamento._id}`, medicamento);
+    return this.http.put<void>(`${this.serverUrl}${medicamento._id}`, medicamento);
   }
 
   public delete(medicamento): Observable<void> {
-    return this.httpClient.delete<void>(`${this.serverUrl}${medicamento._id}`);
+    return this.http.delete<void>(`${this.serverUrl}${medicamento._id}`);
   }
 }

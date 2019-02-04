@@ -31,6 +31,21 @@ router.get('/:pag', function(req, res, next) {
     });
 });
 
+router.get('/:pag/:filtro', function(req, res, next) {
+    let pagesize = 10;
+    let n = req.params.pag;
+    
+    database().find( { nome: { $regex: `(?i)${req.params.filtro}`} } )
+        .collation( { locale: 'pt' } )
+        .sort( { nome: 1 } )
+        .skip(pagesize*(n-1))
+        .limit(pagesize)
+        .toArray(function(err, docs) {
+            if (err) console.log(err);
+            else res.send(docs);
+    });
+});
+
 router.post('/', function(req, res, next) {
     delete req.body._id;
     database().insertOne( req.body );

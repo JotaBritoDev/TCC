@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Medicamento } from 'src/app/models/medicamento';
@@ -20,9 +20,11 @@ export class MedicamentosComponent implements OnInit, OnDestroy {
   public item: Medicamento;
   public isLoading: boolean;
   public pagina = 1;
+  public ultimoFiltro: string;
 
   @ViewChild('grid') grid: MedicamentosGridComponent;
   @ViewChild('form') form: MedicamentosFormComponent;
+  @ViewChild('filtro') filtro: ElementRef;
 
   constructor(private service: MedicamentosService) { }
 
@@ -54,11 +56,11 @@ export class MedicamentosComponent implements OnInit, OnDestroy {
     this.inserting = false;
   }
 
-  private loadList(page: number) {
+  private loadList(page) {
     this.isLoading = true;
     this.pagina = page;
     setTimeout(() => {
-      this.service.list(page)
+      this.service.list(page, this.getFiltro())
         .pipe(takeUntil(this.unsubscribe))
         .subscribe(data => {
           this.medicamentos = data;
@@ -85,6 +87,18 @@ export class MedicamentosComponent implements OnInit, OnDestroy {
     this.service.delete(medicamento)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(() => this.loadList(this.pagina));
+  }
+
+  private getFiltro(): string {
+    return this.filtro ? this.filtro.nativeElement.value : '';
+  }
+
+  public filtrar() {
+    const novoFiltro = this.getFiltro();
+    if (this.ultimoFiltro !== novoFiltro) {
+      this.loadList(1);
+      this.ultimoFiltro = novoFiltro;
+    }
   }
 
 }

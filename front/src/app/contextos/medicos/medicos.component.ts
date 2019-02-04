@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { Medico } from 'src/app/models/medico';
 import { MedicosGridComponent } from './medicos-grid/medicos-grid.component';
@@ -18,9 +18,11 @@ export class MedicosComponent implements OnInit, OnDestroy {
   public item: Medico;
   public isLoading: boolean;
   public pagina = 1;
+  public ultimoFiltro: string;
 
   @ViewChild('grid') grid: MedicosGridComponent;
   @ViewChild('form') form: MedicosFormComponent;
+  @ViewChild('filtro') filtro: ElementRef;
 
   constructor(private service: MedicosService) { }
 
@@ -56,7 +58,7 @@ export class MedicosComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.pagina = page;
     setTimeout(() => {
-      this.service.list(page)
+      this.service.list(page, this.getFiltro())
         .subscribe(data => {
           this.medicos = data;
           this.isLoading = false;
@@ -80,6 +82,18 @@ export class MedicosComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.service.delete(medico)
       .subscribe(() => this.loadList(this.pagina));
+  }
+
+  private getFiltro(): string {
+    return this.filtro ? this.filtro.nativeElement.value : '';
+  }
+
+  public filtrar() {
+    const novoFiltro = this.getFiltro();
+    if (this.ultimoFiltro !== novoFiltro) {
+      this.loadList(1);
+      this.ultimoFiltro = novoFiltro;
+    }
   }
 
 }
