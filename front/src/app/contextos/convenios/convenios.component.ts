@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ConveniosService } from './convenios.service';
 import { Subject, Observable } from 'rxjs';
 import { Convenio } from 'src/app/models/convenio';
@@ -18,9 +18,11 @@ export class ConveniosComponent implements OnInit, OnDestroy {
   public item: Convenio;
   public isLoading: boolean;
   public pagina = 1;
+  public ultimoFiltro: string;
 
   @ViewChild('grid') grid: ConveniosGridComponent;
   @ViewChild('form') form: ConveniosFormComponent;
+  @ViewChild('filtro') filtro: ElementRef;
 
   constructor(private service: ConveniosService) { }
 
@@ -56,7 +58,7 @@ export class ConveniosComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.pagina = page;
     setTimeout(() => {
-      this.service.list(page)
+      this.service.list(page, this.getFiltro())
         .subscribe(data => {
           this.convenios = data;
           this.isLoading = false;
@@ -80,6 +82,18 @@ export class ConveniosComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.service.delete(convenio)
       .subscribe(() => this.loadList(this.pagina));
+  }
+
+  private getFiltro(): string {
+    return this.filtro ? this.filtro.nativeElement.value : '';
+  }
+
+  public filtrar() {
+    const novoFiltro = this.getFiltro();
+    if (this.ultimoFiltro !== novoFiltro) {
+      this.loadList(1);
+      this.ultimoFiltro = novoFiltro;
+    }
   }
 
 }

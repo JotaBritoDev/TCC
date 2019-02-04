@@ -13,19 +13,23 @@ export class ConveniosService {
 
   constructor(private http: HttpClient) { }
 
-  public list(page): Observable<Convenio[]> {
-    return this.http.get<Convenio[]>(`${this.serverUrl}${page}`);
+  public list(page: number, filter: string): Observable<Convenio[]> {
+    if (filter) {
+      return this.http.get<Convenio[]>(`${this.serverUrl}${page}/${filter}`);
+    } else {
+      return this.http.get<Convenio[]>(`${this.serverUrl}${page}`);
+    }
   }
 
-  public add(convenio): Observable<void> {
+  public add(convenio: Convenio): Observable<void> {
     return this.http.post<void>(this.serverUrl, convenio);
   }
 
-  public edit(convenio): Observable<void> {
+  public edit(convenio: Convenio): Observable<void> {
     return this.http.put<void>(`${this.serverUrl}${convenio._id}`, convenio);
   }
 
-  public delete(convenio): Observable<void> {
+  public delete(convenio: Convenio): Observable<void> {
     return this.http.delete<void>(`${this.serverUrl}${convenio._id}`);
   }
 
