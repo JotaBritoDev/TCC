@@ -39,7 +39,6 @@ app.get('/api-docs', function(req, res, next) {
 });
 
 app.all('/*', function(req, res, next) {
-  console.log(req);
   res.sendFile('public/index.html', { root: __dirname });
 });
 

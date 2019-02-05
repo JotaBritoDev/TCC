@@ -1,19 +1,14 @@
+import { Convenio } from './convenio';
+import { Endereco } from './endereco';
+
 export interface Paciente {
     _id: string;
     nome: string;
     nascimento: Date;
     telefone: string;
     email: string;
-    convenio: string;
+    convenio: Convenio;
     altura: string;
     peso: string;
-    endereco: {
-        cep: string;
-        numero: string;
-        complemento: string;
-        rua: string;
-        bairro: string;
-        cidade: string;
-        estado: string;
-    };
+    endereco: Endereco;
 }

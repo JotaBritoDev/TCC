@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-1 mb-3 border-bottom">
   <h3 class="h3 my-0 pt-2 mr-3">Médicos</h3>
-  <div class="btn-toolbar mb-md-0">
+  <div class="btn-toolbar mb-md-0 mt-2 mt-sm-0 ml-auto">
     <div class="mr-2">
       <input type="text" *ngIf="showGrid" [ngClass]="{'border border-primary': filtro.value}" class="form-control" placeholder="Filtrar médico" (keyup.enter)="filtrar()" (blur)="filtrar()" #filtro>
     </div>

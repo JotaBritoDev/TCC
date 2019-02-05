@@ -20,6 +20,7 @@ export class PacientesFormComponent extends FormComponent implements OnInit {
   @ViewChild('focusObj') focusObj: ElementRef;
 
   public form: FormGroup;
+  private conveniosOriginal: Convenio[];
 
   constructor(private formBuilder: FormBuilder,
     private cepService: ConsultaCepService,
@@ -52,6 +53,34 @@ export class PacientesFormComponent extends FormComponent implements OnInit {
     }, 100);
 
     this.inserindo = (this.item ? false : true);
+
+    this.loadCombo();
+  }
+
+  private loadCombo() {
+    if ((this.item) && (this.item.convenio) && (this.convenios)) {
+      this.conveniosOriginal = this.convenios;
+
+      this.convenios = this.convenios
+        .filter((e) => e.nome !== this.item.convenio.nome);
+      this.convenios.push(this.item.convenio);
+      this.convenios
+        .sort((a, b) => {
+          return a.nome > b.nome ? 1 : -1;
+        });
+    }
+  }
+
+  public convenioAtivo(convenio: Convenio): boolean {
+    let retorno = false;
+
+    if (!this.conveniosOriginal) {
+      retorno = true;
+    } else {
+      retorno = this.conveniosOriginal.filter(e => e.nome === convenio.nome).length > 0;
+    }
+
+    return retorno;
   }
 
   public onSubmit() {
@@ -101,11 +130,6 @@ export class PacientesFormComponent extends FormComponent implements OnInit {
 
   public calculaIdade(nascimento) {
     return this.idadeService.execute  (nascimento);
-  }
-
-  public getConvenio(): boolean {
-    return (this.item) && (this.item.convenio) && (this.convenios) &&
-      (!this.convenios.some((e) => e.nome === this.item.convenio));
   }
 
 }
