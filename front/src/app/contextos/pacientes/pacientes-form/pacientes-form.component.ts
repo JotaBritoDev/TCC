@@ -21,6 +21,7 @@ export class PacientesFormComponent extends FormComponent implements OnInit {
 
   public form: FormGroup;
   private conveniosOriginal: Convenio[];
+  public esconderMensagem = false;
 
   constructor(private formBuilder: FormBuilder,
     private cepService: ConsultaCepService,
