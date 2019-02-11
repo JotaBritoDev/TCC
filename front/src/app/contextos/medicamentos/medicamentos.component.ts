@@ -26,7 +26,7 @@ export class MedicamentosComponent implements OnInit, OnDestroy {
   @ViewChild('form') form: MedicamentosFormComponent;
   @ViewChild('filtro') filtro: ElementRef;
 
-  constructor(private service: MedicamentosService) { }
+  constructor(private medicamentosService: MedicamentosService) { }
 
   ngOnInit() {
     this.item = undefined;
@@ -60,7 +60,7 @@ export class MedicamentosComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.pagina = page;
     setTimeout(() => {
-      this.service.list(page, this.getFiltro())
+      this.medicamentosService.list(page, this.getFiltro())
         .pipe(takeUntil(this.unsubscribe))
         .subscribe(data => {
           this.medicamentos = data;
@@ -73,9 +73,9 @@ export class MedicamentosComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     let observable: Observable<void>;
     if (this.inserting) {
-      observable = this.service.add(medicamento);
+      observable = this.medicamentosService.add(medicamento);
     } else {
-      observable = this.service.edit(medicamento);
+      observable = this.medicamentosService.edit(medicamento);
     }
     observable.pipe(takeUntil(this.unsubscribe))
     .subscribe(() => this.loadList(this.pagina));
@@ -85,7 +85,7 @@ export class MedicamentosComponent implements OnInit, OnDestroy {
 
   public delete(medicamento) {
     this.isLoading = true;
-    this.service.delete(medicamento)
+    this.medicamentosService.delete(medicamento)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(() => this.loadList(this.pagina));
   }

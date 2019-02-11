@@ -1,30 +1,262 @@
-<div class="form-row">
-  <div class="col-md-4">
-    <label for="inputPaciente" class="control-label">Paciente</label>
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <div class="input-group-text bg-selected">
-          <mat-icon class="text-white">person</mat-icon>
-        </div>
+<div class="row">
+  <div *ngIf="pacienteEscolhido" class="col-sm-6">
+    <div>
+      Paciente
+    </div>
+    <div class="border rounded-left py-2 pl-2 pl-lg-4 pr-2" style="border-left: 1em solid green !important;">
+      <div class="float-right">
+        <button class="btn btn-outline-primary" (click)="trocarPaciente()">
+          <mat-icon class="align-middle mr-lg-2">backspace</mat-icon>
+          <span class="align-middle d-none d-lg-inline-block">Trocar</span>
+        </button>
       </div>
-      <input type="text" class="form-control" id="inlineFormInputGroupUsername">
-      <button class="btn btn-outline-secondary py-0">
-        <mat-icon class="align-middle">search</mat-icon>
-      </button>
+      <h5 class="mt-1">
+        {{ pacienteEscolhido.nome }}
+      </h5>
+      <div *ngIf="pacienteEscolhido.convenio">
+        <mat-icon class="align-middle mr-4">business_center</mat-icon>
+        <span class="align-middle">{{ pacienteEscolhido.convenio.nome }}</span>
+      </div>
+      <div *ngIf="pacienteEscolhido.telefone" class="mt-2 mb-1">
+        <mat-icon class="align-middle mr-4">phone</mat-icon>
+        <span class="align-middle">{{ pacienteEscolhido.telefone }}</span>
+      </div>
     </div>
   </div>
-  <div class="col-md-8">
-    <!-- <div *ngIf="listaPacientes" class="table-responsive">
-      <table class="table table-striped">
+
+  <div *ngIf="medicoEscolhido" class="col-sm-6 mt-2 mt-sm-0">
+    <div>
+      Médico
+    </div>
+    <div class="border rounded-left py-2 pl-2 pl-lg-4 pr-2" style="border-left: 1em solid orange !important;">
+      <div class="float-right">
+        <button class="btn btn-outline-primary" (click)="trocarMedico()">
+          <mat-icon class="align-middle mr-lg-2">backspace</mat-icon>
+          <span class="align-middle d-none d-lg-inline-block">Trocar</span>
+        </button>
+      </div>
+      <h5 class="mt-1">
+        {{ medicoEscolhido.nome }}
+      </h5>
+      <div *ngIf="medicoEscolhido.especialidade">
+        <mat-icon class="align-middle mr-4">grade</mat-icon>
+        <span class="align-middle">{{ medicoEscolhido.especialidade }}</span>
+      </div>
+      <div *ngIf="medicoEscolhido.restricoes" class="mt-2 mb-1">
+        <mat-icon class="align-middle mr-4">info_outline</mat-icon>
+        <span class="align-middle">{{ medicoEscolhido.restricoes }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="horarioEscolhido" class="col-12 mt-2 mt-sm-4">
+    <div>Horário da consulta </div>
+    <div class="h5 ml-2">{{ formatDateHour(horarioEscolhido) }}</div>
+  </div>
+
+  <div *ngIf="pacienteEscolhido && medicoEscolhido && horarioEscolhido" class="col-12 mt-0 mt-sm-2">
+    <div>
+      <div>
+        <label for="textObservacoes">Observação:</label>
+      </div>
+      <div>
+        <textarea #observacaoInput class="form-control" name="textObservacoes" id="textObservacoes" rows="4" placeholder="Anote aqui qualquer observação feita pelo paciente"></textarea>
+      </div>
+    </div>
+    <div class="pt-0 pt-sm-2">
+      <app-botoes-formulario habilitado="true" (cancelarEvent)="cancel.emit()" (salvarEvent)="salvar()"></app-botoes-formulario>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!pacienteEscolhido" [ngClass]="{'mt-4': (pacienteEscolhido || medicoEscolhido)}">
+  <div class="form-group row">
+    <div class="col-md-8 col-lg-5">
+      <h4>
+        Escolha o paciente
+      </h4>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text bg-selected">
+            <mat-icon class="text-white">person</mat-icon>
+          </div>
+        </div>
+        <input type="text" class="form-control" id="inlineFormInputGroupUsername" (keyup.enter)="filtrarPacientes(pacienteInput.value)"
+          #pacienteInput>
+        <button class="btn btn-outline-secondary py-0" (click)="filtrarPacientes(pacienteInput.value)">
+          <mat-icon class="align-middle">search</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <app-loading [loading]="loadingPacientes"></app-loading>
+  <div *ngIf="executouPesquisaPaciente && (!pacientes || pacientes.length === 0) && !loadingPacientes" class="mt-2">
+    <div class="alert alert-info" role="alert">
+      <mat-icon class="align-middle text-info mr-2">error_outline</mat-icon>
+      <span class="align-middle">Não há pacientes com este nome, por favor verifique o filtro e faça a pesquisa
+        novamente.</span>
+    </div>
+  </div>
+
+  <div *ngIf="pacientes && !loadingPacientes">
+    <table class="table table-hover table-striped">
+      <tbody>
+        <tr *ngFor="let paciente of pacientes" style="cursor: pointer;" (click)="escolherPaciente(paciente)">
+          <div class="py-4 px-2 px-sm-4">
+
+            <div class="mb-0 mb-sm-4">
+              <span class="h5 ml-0 ml-sm-4">{{ paciente.nome }} </span><span><small> - {{
+                  formatDate(paciente.nascimento) }}</small></span>
+            </div>
+
+            <div class="mt-2">
+              <div class="d-inline-block w-10 text-center">
+                <mat-icon [ngClass]="{'text-muted': !paciente.convenio.nome}" class="align-middle">business_center</mat-icon>
+              </div>
+              <div class="d-inline-block w-90 align-middle pl-2">
+                <span *ngIf="paciente.convenio" class="align-middle">{{ paciente.convenio.nome }}</span>
+                <span *ngIf="!paciente.convenio" class="align-middle text-muted">---</span>
+              </div>
+            </div>
+
+            <div class="mt-2">
+              <div class="d-inline-block w-10 text-center">
+                <mat-icon [ngClass]="{'text-muted': !paciente.telefone}" class="align-middle">phone</mat-icon>
+              </div>
+              <div class="d-inline-block w-90 align-middle pl-2">
+                <span *ngIf="paciente.telefone" class="align-middle">{{ paciente.telefone }}</span>
+                <span *ngIf="!paciente.telefone" class="align-middle text-muted">---</span>
+              </div>
+            </div>
+
+            <div class="mt-2">
+              <div class="d-inline-block w-10 text-center">
+                <mat-icon [ngClass]="{'text-muted': !paciente.email}" class="align-middle">alternate_email</mat-icon>
+              </div>
+              <div class="d-inline-block w-90 align-middle pl-2">
+                <span *ngIf="paciente.email" class="align-middle">{{ paciente.email }}</span>
+                <span *ngIf="!paciente.email" class="align-middle text-muted">---</span>
+              </div>
+            </div>
+
+            <div class="mt-2">
+              <div class="d-inline-block w-10 text-center">
+                <mat-icon class="align-middle">home</mat-icon>
+              </div>
+              <div class="d-inline-block w-90 align-middle pl-2">
+                <span class="align-middle">{{ paciente.endereco.rua }}</span>
+                <span *ngIf="paciente.endereco.numero" class="align-middle">, {{ paciente.endereco.numero }}</span>
+                <span *ngIf="paciente.endereco.complemento" class="align-middle"> {{ paciente.endereco.complemento }}</span>
+                <span *ngIf="paciente.endereco.bairro" class="align-middle"> - {{ paciente.endereco.bairro }}</span>
+                <span *ngIf="paciente.endereco.cidade" class="align-middle"> - {{ paciente.endereco.cidade }}</span>
+                <span *ngIf="paciente.endereco.estado" class="align-middle"> - {{ paciente.endereco.estado }}</span>
+              </div>
+            </div>
+
+          </div>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<div *ngIf="pacienteEscolhido && !medicoEscolhido" class="mt-4">
+  <div class="form-group row">
+    <div class="col-md-8 col-lg-5">
+      <h4>
+        Escolha o médico
+      </h4>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text bg-selected">
+            <mat-icon class="text-white">airline_seat_recline_normal</mat-icon>
+          </div>
+        </div>
+        <input type="text" class="form-control" id="inlineFormInputGroupUsername" (keyup.enter)="filtrarMedicos(medicoInput.value)"
+          #medicoInput>
+        <button class="btn btn-outline-secondary py-0" (click)="filtrarMedicos(medicoInput.value)">
+          <mat-icon class="align-middle">search</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <app-loading [loading]="loadingMedicos"></app-loading>
+  <div *ngIf="executouPesquisaMedico && (!medicos || medicos.length === 0) && !loadingMedicos" class="mt-2">
+    <div class="alert alert-info" role="alert">
+      <mat-icon class="align-middle text-info mr-2">error_outline</mat-icon>
+      <span class="align-middle">Não há médicos com este nome, por favor verifique o filtro e faça a pesquisa
+        novamente.</span>
+    </div>
+  </div>
+
+  <div *ngIf="medicos && !loadingMedicos">
+    <table class="table table-hover table-striped">
+      <tbody>
+        <tr *ngFor="let medico of medicos" style="cursor: pointer;" (click)="escolherMedico(medico)">
+          <div class="py-4 px-2 px-sm-4">
+
+            <div class="mb-0 mb-sm-4">
+              <span class="h5 ml-0 ml-sm-4">{{ medico.nome }}</span>
+            </div>
+
+            <div class="mt-2">
+              <div class="d-inline-block w-10 text-center">
+                <mat-icon [ngClass]="{'text-muted': !medico.especialidade}" class="align-middle">grade</mat-icon>
+              </div>
+              <div class="d-inline-block w-90 align-middle pl-2">
+                <span *ngIf="medico.especialidade" class="align-middle">{{ medico.especialidade }}</span>
+                <span *ngIf="!medico.especialidade" class="align-middle text-muted">---</span>
+              </div>
+            </div>
+
+            <div class="mt-2">
+              <div class="d-inline-block w-10 text-center">
+                <mat-icon [ngClass]="{'text-muted': !medico.restricoes}" class="align-middle">info_outline</mat-icon>
+              </div>
+              <div class="d-inline-block w-90 align-middle pl-2">
+                <span *ngIf="medico.restricoes" class="align-middle">{{ medico.restricoes }}</span>
+                <span *ngIf="!medico.restricoes" class="align-middle text-muted">---</span>
+              </div>
+            </div>
+
+          </div>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div *ngIf="pacienteEscolhido && medicoEscolhido  && !horarioEscolhido" class="mt-4">
+  <div class="form-group row">
+    <div class="col-md-8 col-lg-5">
+      <label for="inputData" class="control-label">Data</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text bg-selected">
+            <mat-icon class="text-white">event</mat-icon>
+          </div>
+        </div>
+        <input type="date" class="form-control" id="inputData" (keyup.enter)="getConsultas(dataInput.value)" #dataInput>
+        <button class="btn btn-outline-secondary py-0" (click)="getConsultas(dataInput.value)">
+          <mat-icon class="align-middle">search</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <app-loading [loading]="loadingConsultas"></app-loading>
+    <div *ngIf="!loadingConsultas && executouPesquisaConsulta">
+
+      <table class="table table-hover table-striped">
         <tbody>
-          <tr *ngFor="let paciente of listaPacientes">
-            <td class="align-middle" [id]="paciente._id">
-              <button class="btn btn-outline-primary">O</button>
-              {{ paciente.nome }}
-            </td>
+          <tr *ngFor="let item of gradeConsultas" style="cursor: pointer;" (click)="escolherHorario(item)">
+            <td class="text-center" width="10%">{{ item.horario }}</td>
+            <td width="90%">{{ item.situacao }}</td>
           </tr>
         </tbody>
       </table>
-    </div> -->
+
+    </div>
   </div>
 </div>

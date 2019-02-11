@@ -1,3 +1,20 @@
-<p>
-  Nenhuma consulta cadastrada.
-</p>
+<app-sem-registro-grid [lista]="lista" [pagina]="pagina" textoSemRegistros="Nenhuma consulta cadastrada." (voltar)="changePage.emit(1)"></app-sem-registro-grid>
+
+<div *ngIf="lista" class="table-responsive">
+  <table class="table table-striped">
+    <tbody>
+      <tr *ngFor="let consulta of lista">
+        <td width="90%" class="align-middle" [id]="consulta._id">
+          {{ formatDateHour(consulta.data) }}<br>
+          {{ consulta.paciente.nome }}<br>
+          {{ consulta.medico.nome }}
+        </td>
+        <td>
+          <app-botoes-grid (editarEvento)="edit.emit(consulta)" (excluirEvento)="delete.emit(consulta)"></app-botoes-grid>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-paginacao-grid [lista]="lista" [pagina]="pagina" (changePage)="changePage.emit($event)"></app-paginacao-grid>

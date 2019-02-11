@@ -8,6 +8,7 @@ export interface Consulta {
     medico: Medico;
     data: Date;
     observacaoMarcada: string;
+    dataRealizado: Date;
     parecerMedico: string;
     medicamentos: Medicamento[];
 }

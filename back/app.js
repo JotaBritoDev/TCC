@@ -10,6 +10,7 @@ var medicamentosRouter = require('./routes/medicamentos');
 var conveniosRouter = require('./routes/convenios');
 var medicosRouter = require('./routes/medicos');
 var pacientesRouter = require('./routes/pacientes');
+var consultasRouter = require('./routes/consultas');
 
 var cors = require('cors')
 var app = express();
@@ -33,6 +34,7 @@ app.use('/api/v1/medicamentos', medicamentosRouter);
 app.use('/api/v1/convenios', conveniosRouter);
 app.use('/api/v1/medicos', medicosRouter);
 app.use('/api/v1/pacientes', pacientesRouter);
+app.use('/api/v1/consultas', consultasRouter);
 
 app.get('/api-docs', function(req, res, next) {
   res.send('API DOCS');
