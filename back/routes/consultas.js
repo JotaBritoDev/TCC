@@ -9,10 +9,8 @@ function database() {
 router.get('/list/:pag/:dt', function(req, res, next) {
     let pagesize = 10;
     let n = req.params.pag;
-    const dataIni = new Date();
 
-    // { data: { $gte: `${dataIni}` } }
-    database().find(  )
+    database().find( {data : { $gte: new Date(req.params.dt) }} )
         .collation( { locale: 'pt' } )
         .sort( { data: 1 } )
         .skip(pagesize*(n-1))
@@ -24,9 +22,12 @@ router.get('/list/:pag/:dt', function(req, res, next) {
 });
 
 router.get('/data/:dt', function(req, res, next) {
-    const dataIni = new Date(req.params.dt + ' 00:01:0000');
-    const dataFim = new Date(req.params.dt + ' 23:59:0000');
-    database().find( { data: { $gte: `${dataIni}`, $lte: `${dataFim}` } } )
+    const dataIni = new Date(req.params.dt);
+    dataIni.setHours(0, 0, 0);
+    const dataFim = new Date(req.params.dt);
+    dataFim.setHours(23, 59, 0);
+    
+    database().find( { data: { $gt: dataIni, $lt: dataFim } } )
         .collation( { locale: 'pt' } )
         .sort( { data: 1 } )
         .toArray(function(err, docs) {
@@ -37,6 +38,7 @@ router.get('/data/:dt', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
     delete req.body._id;
+    req.body.data = new Date(req.body.data);
     database().insertOne( req.body );
     res.send(req.body);
 });

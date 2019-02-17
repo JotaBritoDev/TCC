@@ -25,7 +25,6 @@ export class ConsultasFormComponent implements OnInit {
   public medicoEscolhido: Medico;
   public executouPesquisaMedico: boolean;
 
-  public consultas: Consulta[];
   public loadingConsultas: boolean;
   public horarioEscolhido: Date;
   public executouPesquisaConsulta: boolean;
@@ -137,6 +136,10 @@ export class ConsultasFormComponent implements OnInit {
     return date.toLocaleDateString('pt-BR') + ' ' + date.toLocaleTimeString('pt-BR').substr(0, 5);
   }
 
+  public formatHour(date: Date): string {
+    return date.toLocaleTimeString('pt-BR').substr(0, 5);
+  }
+
   private padLeft(number, length) {
     let my_string = '' + number;
     while (my_string.length < length) {
@@ -151,16 +154,18 @@ export class ConsultasFormComponent implements OnInit {
     this.consultasService.listData(new Date(date.toString() + ' 00:00:0000'))
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(dados => {
-        this.consultas = dados;
         this.gradeConsultas = [];
         let hora = 8;
         let minutos = 0;
         for (let index = 0; index < 25; index++) {
           minutos = (index % 2) * 30;
+          const momento = this.padLeft(hora, 2) + ':' + this.padLeft(minutos, 2);
+          const consulta = dados.filter((e) => this.formatHour(new Date(e.data)) === momento)[0];
+          const sit = consulta ? consulta.paciente.nome + (consulta.observacaoMarcada ? ` - ${consulta.observacaoMarcada}` : '') : 'Livre';
           this.gradeConsultas.push({
             id: index,
-            horario: this.padLeft(hora, 2) + ':' + this.padLeft(minutos, 2),
-            situacao: 'livre'
+            horario: momento,
+            situacao: sit
           });
           if (index % 2 === 1) {
             hora++;
@@ -180,7 +185,7 @@ export class ConsultasFormComponent implements OnInit {
       paciente: this.pacienteEscolhido,
       medico: this.medicoEscolhido,
       data: this.horarioEscolhido,
-      observacaoMarcada: this.observacaoInput.nativeElement.value,
+      observacaoMarcada: this.observacaoInput.nativeElement.value !== '' ? this.observacaoInput.nativeElement.value : undefined,
       dataRealizado: undefined,
       parecerMedico: undefined,
       medicamentos: undefined

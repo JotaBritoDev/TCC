@@ -5,9 +5,18 @@
     <tbody>
       <tr *ngFor="let consulta of lista">
         <td width="90%" class="align-middle" [id]="consulta._id">
-          {{ formatDateHour(consulta.data) }}<br>
-          {{ consulta.paciente.nome }}<br>
-          {{ consulta.medico.nome }}
+          <div class="mb-2">
+            <span class="h5">{{ formatDate(consulta.data) }}</span>
+            <span class="h6"> - {{ formatHour(consulta.data) }}</span>
+          </div>
+          <div class="mb-2">
+            <mat-icon class="mr-2 align-middle">person</mat-icon>
+            <span class="align-middle">{{ consulta.paciente.nome }}</span>
+          </div>
+          <div>
+            <mat-icon class="mr-2 align-middle">business_center</mat-icon>
+            <span class="align-middle">{{ consulta.medico.nome }}</span>
+          </div>
         </td>
         <td>
           <app-botoes-grid (editarEvento)="edit.emit(consulta)" (excluirEvento)="delete.emit(consulta)"></app-botoes-grid>

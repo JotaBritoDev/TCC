@@ -24,4 +24,14 @@ export class ConsultasGridComponent implements OnInit {
     return dt.toLocaleDateString('pt-BR') + ' ' + dt.toLocaleTimeString('pt-BR').substr(0, 5);
   }
 
+  public formatDate(date: Date): string {
+    const dt = new Date(date.toString());
+    return dt.toLocaleDateString('pt-BR');
+  }
+
+  public formatHour(date: Date): string {
+    const dt = new Date(date.toString());
+    return dt.toLocaleTimeString('pt-BR').substr(0, 5);
+  }
+
 }

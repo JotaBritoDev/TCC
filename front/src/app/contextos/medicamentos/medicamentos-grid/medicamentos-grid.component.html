@@ -1,6 +1,6 @@
 <app-sem-registro-grid [lista]="lista" [pagina]="pagina" textoSemRegistros="Nenhum medicamento cadastrado." (voltar)="changePage.emit(1)"></app-sem-registro-grid>
 
-<div *ngIf="lista" class="table-responsive">
+<div *ngIf="lista">
   <table class="table table-striped">
     <tbody>
       <tr *ngFor="let medicamento of lista">
