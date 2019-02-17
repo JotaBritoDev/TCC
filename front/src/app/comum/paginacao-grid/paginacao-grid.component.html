@@ -1,15 +1,15 @@
-<div [ngClass]="{'d-none': getVisibilidade()}" class="row justify-content-center">
-  <div>
-    <button class="btn btn-outline-primary" (click)="changePagina(-1)" id="btnAnterior">
-      <mat-icon class="align-middle">navigate_before_rounded</mat-icon>
+<ul [ngClass]="{'d-none': getVisibilidade()}" class="nav justify-content-center">
+  <li>
+    <button class="btn btn-outline-primary" (click)="changePagina(-1)">
+      <mat-icon class="align-middle">navigate_before</mat-icon>
     </button>
-  </div>
-  <div class="col-3 col-sm-2 col-lg-1">
-    <input type="text" class="form-control" (keyup.enter)="changePagina(0)" (blur)="changePagina(0)" #inputPagina>
-  </div>
-  <div>
+  </li>
+  <li class="mx-2 align-self-center">
+    <input type="text" class="form-control" style="width:75px;" (keyup.enter)="changePagina(0)" (blur)="changePagina(0)" #inputPagina>
+  </li>
+  <li>
     <button class="btn btn-outline-primary" (click)="changePagina(1)" id="btnProximo">
-      <mat-icon class="align-middle">navigate_next_rounded</mat-icon>
+      <mat-icon class="align-middle">navigate_next</mat-icon>
     </button>
-  </div>
-</div>
+  </li>
+</ul>
