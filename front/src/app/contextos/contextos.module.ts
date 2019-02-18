@@ -28,6 +28,7 @@ import { CheckboxComponent } from '../comum/checkbox/checkbox.component';
 import { LoadingComponent } from '../comum/loading/loading.component';
 import { PaginacaoGridComponent } from '../comum/paginacao-grid/paginacao-grid.component';
 import { SemRegistroGridComponent } from '../comum/sem-registro-grid/sem-registro-grid.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { SemRegistroGridComponent } from '../comum/sem-registro-grid/sem-registr
     MatIconModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ChartsModule
   ],
   declarations: [
     AgendaComponent,
