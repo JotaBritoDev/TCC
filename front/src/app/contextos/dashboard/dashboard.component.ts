@@ -13,12 +13,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<void> = new Subject<void>();
   constructor(private consultasService: ConsultasService) { }
 
+  public carregando: boolean;
+
+  public labelsConvenios: string[];
+  public dataConvenios: number[];
+
   public labelsConsultas: string[];
   public dataConsultas: number[];
-  public dataConsultasCompleto: any;
+  public dataConsultasCompleto: Array<any>;
 
   public labelConsultasConvenios: string[];
   public dataConsultasConvenios: number[];
+
+  public labelsMedicos: string[];
+  public dataMedicos: number[];
 
   public optionsConsultas = {
     scaleShowVerticalLines: false,
@@ -32,7 +40,40 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   };
 
+  public optionsConsultasConvenios = {
+    legend: {
+      position: 'bottom',
+      labels: {
+        boxWidth: 25
+      }
+    }
+  };
+
+  public optionsMedicos = {
+    scaleShowVerticalLines: false,
+    scales: {
+      xAxes: [{
+        ticks: {
+          min: 0,
+          stepSize: 1
+        }
+      }]
+    }
+  };
+
+  public optionsConvenios = {
+    cutoutPercentage: 5,
+    legend: {
+      reverse: true,
+      position: 'bottom',
+      labels: {
+        boxWidth: 10
+      }
+    }
+  };
+
   ngOnInit() {
+    this.carregando = true;
     this.labelsConsultas = [];
     this.dataConsultas = [];
     this.dataConsultasConvenios = [];
@@ -135,8 +176,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
                                                 this.dataConsultasCompleto = dados.concat(dados2).concat(dados3).concat(dados4)
                                                   .concat(dados5).concat(dados6).concat(dados7).concat(dados8).concat(dados9)
                                                   .concat(dados10).concat(dados11);
+
                                                 this.dataConsultasConvenios.push(totalConvenio);
                                                 this.dataConsultasConvenios.push(this.dataConsultasCompleto.length - totalConvenio);
+
+                                                this.montaGraficoConvenios();
+                                                this.montaGraficoMedicos();
+
+                                                this.carregando = false;
                                               });
                                           });
                                       });
@@ -147,6 +194,98 @@ export class DashboardComponent implements OnInit, OnDestroy {
                   });
               });
           });
+      });
+  }
+
+  private montaGraficoConvenios() {
+    this.dataConvenios = [];
+    this.labelsConvenios = [];
+
+    const conveniosDados = [];
+    let convenioAtual = '';
+    let qtde = 0;
+    this.dataConsultasCompleto
+      .filter(e => e.paciente.convenio)
+      .sort((a, b) => a.paciente.convenio.nome > b.paciente.convenio.nome ? -1 :
+        a.paciente.convenio.nome < b.paciente.convenio.nome ? 1 : 0)
+      .forEach(e => {
+        if (e.paciente.convenio.nome !== convenioAtual) {
+          if (convenioAtual !== '') {
+            conveniosDados.push({
+              convenio: convenioAtual,
+              valor: qtde
+            });
+          }
+          convenioAtual = e.paciente.convenio.nome;
+          qtde = 0;
+        }
+        qtde ++;
+      });
+      if (convenioAtual !== '') {
+        conveniosDados.push({
+          convenio: convenioAtual,
+          valor: qtde
+        });
+      }
+
+    qtde = 0;
+    conveniosDados
+      .sort((a, b) => a.valor > b.valor ? -1 :
+        a.valor < b.valor ? 1 : 0)
+      .forEach(e => {
+        if (this.dataConvenios.length < 4) {
+          this.dataConvenios.push(e.valor);
+          this.labelsConvenios.push(e.convenio);
+        } else {
+          qtde += e.valor;
+        }
+      });
+    if (qtde > 0) {
+      this.dataConvenios.push(qtde);
+      this.labelsConvenios.push('Outros');
+    }
+    this.dataConvenios.reverse();
+    this.labelsConvenios.reverse();
+  }
+
+  private montaGraficoMedicos() {
+    this.dataMedicos = [];
+    this.labelsMedicos = [];
+
+    const medicosDados = [];
+
+    let especialidadeAtual = '';
+    let qtde = 0;
+    this.dataConsultasCompleto
+      .sort((a, b) => a.medico.especialidade > b.medico.especialidade ? -1 :
+        a.medico.especialidade < b.medico.especialidade ? 1 : 0)
+      .forEach(e => {
+        if (e.medico.especialidade !== especialidadeAtual) {
+          if (especialidadeAtual !== '') {
+            medicosDados.push({
+              especialidade: especialidadeAtual,
+              valor: qtde
+            });
+          }
+          especialidadeAtual = e.medico.especialidade;
+          qtde = 0;
+        }
+        qtde++;
+      });
+    if (especialidadeAtual !== '') {
+      medicosDados.push({
+        especialidade: especialidadeAtual,
+        valor: qtde
+      });
+    }
+
+    qtde = 0;
+    medicosDados
+      .sort((a, b) => a.valor > b.valor ? -1 :
+        a.valor < b.valor ? 1 : 0)
+      .forEach(e => {
+          this.dataMedicos.push(e.valor);
+          this.labelsMedicos.push(e.especialidade);
       });
   }
 
