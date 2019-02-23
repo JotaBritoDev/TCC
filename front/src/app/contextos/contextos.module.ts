@@ -25,10 +25,11 @@ import { PacientesFormComponent } from './pacientes/pacientes-form/pacientes-for
 import { PacientesGridComponent } from './pacientes/pacientes-grid/pacientes-grid.component';
 import { PacientesComponent } from './pacientes/pacientes.component';
 import { CheckboxComponent } from '../comum/checkbox/checkbox.component';
-import { LoadingComponent } from '../comum/loading/loading.component';
 import { PaginacaoGridComponent } from '../comum/paginacao-grid/paginacao-grid.component';
 import { SemRegistroGridComponent } from '../comum/sem-registro-grid/sem-registro-grid.component';
 import { ChartsModule } from 'ng2-charts';
+import { LoadingComponent } from '../comum/loading/loading.component';
+import { ComumModule } from '../comum/comum.module';
 
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import { ChartsModule } from 'ng2-charts';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    ChartsModule
+    ChartsModule,
+    ComumModule
   ],
   declarations: [
     AgendaComponent,
@@ -57,13 +59,7 @@ import { ChartsModule } from 'ng2-charts';
     PacientesFormComponent,
     PacientesGridComponent,
     ConsultasGridComponent,
-    ConsultasFormComponent,
-    BotoesFormularioComponent,
-    BotoesGridComponent,
-    CheckboxComponent,
-    LoadingComponent,
-    PaginacaoGridComponent,
-    SemRegistroGridComponent
+    ConsultasFormComponent
   ],
   exports: [ ]
 })

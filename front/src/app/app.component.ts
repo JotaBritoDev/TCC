@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginService } from './login/login.service';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,9 @@ export class AppComponent {
 
   title = 'Healthy:)';
   public _opened = false;
+
+  constructor(private router: Router,
+    private loginService: LoginService) { }
 
   public _toggleSidebar() {
     this._opened = !this._opened;
@@ -22,5 +26,13 @@ export class AppComponent {
     this.router.navigate(['/' + route]);
   }
 
-  constructor(private router: Router) { }
+  public exibirBarra() {
+    return this.loginService.UsuarioAutenticado();
+  }
+
+  public logoff() {
+    this.loginService.logoff();
+    this.router.navigate(['/login']);
+  }
+
 }

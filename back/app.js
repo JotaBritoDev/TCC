@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
+var loginRouter = require('./routes/login');
 var usersRouter = require('./routes/users');
 var medicamentosRouter = require('./routes/medicamentos');
 var conveniosRouter = require('./routes/convenios');
@@ -40,6 +41,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/v1', indexRouter);
+app.use('/api/v1/login', loginRouter);
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/medicamentos', medicamentosRouter);
 app.use('/api/v1/convenios', conveniosRouter);

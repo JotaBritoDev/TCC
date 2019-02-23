@@ -11,13 +11,16 @@ import { AppRoutingModule } from './/app-routing.module';
 import { AppComponent } from './app.component';
 import { FormComponent } from './comum/form/form.component';
 import { ContextosModule } from './contextos/contextos.module';
+import { AuthGuard } from './guards/auth.guard';
 import { LoginComponent } from './login/login.component';
+import { LoginService } from './login/login.service';
+import { LoadingComponent } from './comum/loading/loading.component';
+import { ComumModule } from './comum/comum.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    FormComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -28,10 +31,13 @@ import { LoginComponent } from './login/login.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    ChartsModule
+    ChartsModule,
+    ComumModule
   ],
   providers: [
-    {provide: LocationStrategy, useClass: PathLocationStrategy}
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
+    AuthGuard,
+    LoginService
   ],
   bootstrap: [AppComponent],
 })

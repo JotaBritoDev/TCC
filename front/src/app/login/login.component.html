@@ -1,42 +1,78 @@
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-1 mb-3 border-bottom">
-  <h3 class="h3 my-0 pt-2 mr-3">Login</h3>
-</div>
-<div>
-  <form class="form-horizontal">
-
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="pacienteInput" class="control-label">Usuário</label>
-        <input type="text" class="form-control border border-primary" id="pacienteInput" name="paciente" placeholder="Usuário"
-          autofocus required>
+<div class="row mt-4">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-5 px-sm-0">
+    <div class="col-12 border rounded border-primary bg-primary text-white px-4 py-2 d-block d-sm-none mb-2">
+      <span class="h2 align-middle mr-2">Healthy :)</span>
+      <div class="float-right">
+        <span class="align-middle text-selected"><small>v 1.0.0</small></span>
       </div>
     </div>
-    
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="pacienteInput" class="control-label">Senha</label>
-        <input type="text" class="form-control border border-primary" id="pacienteInput" name="paciente" placeholder="Senha"
-          autofocus required>
-      </div>
-    </div>
+    <div class="border rounded px-4">
+      <div class="row">
+        <div class="col-12 mt-4 mb-2">
+          <h4>Login</h4>
+          <hr>
+        </div>
 
-    <div class="form-row">
-        <div class="form-group col-sm-12">
-          <div class="d-none d-sm-block">
-            <div class="btn-toolbar mb-2 mb-md-0 btn-group">
-              <button type="submit" class="btn btn-primary">
-                Entrar
-              </button>
-            </div>
-          </div>
-    
-          <div class="form-group d-sm-none">
-            <button type="submit" class="btn btn-primary btn-block">
-              Entrar
-            </button>
+        <div class="col-12">
+          <div *ngIf="mensagemErro" class="alert alert-danger px-3" role="alert">
+            <mat-icon class="align-middle mr-2 mr-sm-4">error_outline</mat-icon>
+            <span class="align-middle">{{ mensagemErro }}</span>
           </div>
         </div>
-      </div>
 
-  </form>
+        <form class="col-12 px-0" (ngSubmit)="validaLogin('jota@zapwedding.com.br', '12345')">
+          <div class="col-12">
+            <label for="usuarioHealthyInput">Email</label>            
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text px-2 bg-white">
+                  <mat-icon>alternate_email</mat-icon>
+                </div>
+              </div>
+              <input type="text" name="usuarioHealthy" id="usuarioHealthyInput" class="form-control border-primary" (keyup)="limpaMensagem()" #usu>
+            </div>
+          </div>
+
+          <div class="col-12 mt-4 mb-4">
+            <label for="senhaHealthyInput">Senha</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text px-2 bg-white">
+                  <mat-icon>lock</mat-icon>
+                </div>
+              </div>
+              <input type="password" name="senhaHealthy" id="senhaHealthyInput" class="form-control border-primary" (keyup)="limpaMensagem()" #snh>
+              <!-- bug no chrome 
+                Unchecked runtime.lastError: The message port closed before a response was received.
+                https://github.com/gatsbyjs/gatsby/issues/9899 -->
+            </div>
+          </div>
+
+          <div class="col-12 pt-2 my-4">
+            <app-loading [loading]="logando"></app-loading>
+            <button *ngIf="!logando" type="submit" class="btn btn-primary btn-block">Entrar</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 px-0 d-none d-sm-block">
+    <div class="border border-primary rounded p-4 h-100 bg-primary text-white d-flex flex-wrap">
+      <div>
+        <span class="h2 align-middle mr-2">Healthy</span>
+        <span class="h1 align-middle">:)</span>
+        <div class="mt-2">
+          <span>Clínica médica</span>
+        </div>
+      </div>
+      <div>
+        <small>Faça o login ou solicite ao supervisor a crição de um usuário.</small>
+      </div>
+      <div class="d-flex flex-wrap align-content-end ml-auto">
+        <small class="text-selected">v 1.0.0</small>
+      </div>
+    </div>
+  </div>
 </div>

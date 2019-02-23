@@ -4,9 +4,9 @@
     "description": "",
     "main": "./back/app.js",
     "scripts": {
-        "preinstall": "cd front && npm install && ng build --prod && cd ../back && npm install",
-        "install": "(rm -R ../app-realhealthy-com-br/* || true) && (cp -R ./back/ ../app-realhealthy-com-br/)",
+        "predeploy": "cd front && npm install && ng build --prod && cd ../back && npm install",
+        "deploy": "(rm -R ../app-realhealthy-com-br/* || true) && (cp -R ./back/ ../app-realhealthy-com-br/)",
         "prestart": "cd front && npm install && ng build",
-        "start": "cd back && npm install && npm start"
+        "start": "cd back && npm install && npm run-script start-dev"
     }
 }

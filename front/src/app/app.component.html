@@ -8,12 +8,12 @@
 
         <h5 class="bg-light text-dark pt-1 pl-1 border-bottom">Painel</h5>
 
-        <div class="dropdown-item py-2" (click)="redirect('agenda')" [ngClass]="{'bg-selected text-white': selectedRoute('agenda')}">
+        <!-- <div class="dropdown-item py-2" (click)="redirect('agenda')" [ngClass]="{'bg-selected text-white': selectedRoute('agenda')}">
           <div class="d-inline-block">
             <mat-icon class="align-middle mr-1">event</mat-icon>
           </div>
           <div class="d-inline-block align-text-top">Agenda</div>
-        </div>
+        </div> -->
 
         <div class="dropdown-item py-2" (click)="redirect('dashboard')" [ngClass]="{'bg-selected text-white': selectedRoute('dashboard')}">
           <div class="d-inline-block">
@@ -61,17 +61,26 @@
           <div class="d-inline-block align-text-top">Medicamentos</div>
         </div>
 
-        <div class="dropdown-item py-2 mb-2" (click)="redirect('convenios')" [ngClass]="{'bg-selected text-white': selectedRoute('convenios')}">
+        <div class="dropdown-item py-2" (click)="redirect('convenios')" [ngClass]="{'bg-selected text-white': selectedRoute('convenios')}">
           <div class="d-inline-block">
             <mat-icon class="align-middle mr-1">business_center</mat-icon>
           </div>
           <div class="d-inline-block align-text-top">Convênios</div>
         </div>
+
+        <hr class="my-1 py-0">
+
+        <div class="dropdown-item py-2 mb-2" (click)="logoff()">
+          <div class="d-inline-block">
+            <mat-icon class="align-middle mr-1">power_settings_new</mat-icon>
+          </div>
+          <div class="d-inline-block align-text-top">Sair</div>
+        </div>
       </div>
     </ng-sidebar>
 
     <div ng-sidebar-content>
-      <div class="position-static d-inline-block container-fluid bg-primary py-2 border-bottom" style="height: 55px">
+      <div *ngIf="exibirBarra()" class="position-static d-inline-block container-fluid bg-primary py-2 border-bottom" style="height: 55px">
         <div class="d-inline-block">
           <button class="btn btn-light" (click)="_toggleSidebar()">
             <mat-icon class="align-middle">menu</mat-icon>
@@ -79,6 +88,9 @@
         </div>
         <div class="d-inline-block pl-2 text-white align-middle">
           <h2 class="my-0">Healthy :)</h2>
+        </div>
+        <div class="float-right mt-2">
+          <span class="text-white align-middle" style="cursor: pointer" (click)="logoff()">Sair</span>
         </div>
       </div>
       <div class="container pb-4">
