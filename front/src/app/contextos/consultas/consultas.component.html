@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-1 mb-3 border-bottom">
   <h3 class="h3 my-0 pt-2 mr-3">Consultas</h3>
   <div class="btn-toolbar mb-md-0">
-    <button class="btn btn-primary" *ngIf="showGrid" (click)="insert()">
+    <button class="btn btn-primary" *ngIf="showGrid" (click)="route.navigateByUrl('/consultas/new')">
       <mat-icon class="align-middle">add</mat-icon>
       <div class="d-none d-sm-inline-block">Incluir</div>
     </button>

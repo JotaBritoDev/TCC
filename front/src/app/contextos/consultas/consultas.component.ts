@@ -6,6 +6,7 @@ import { ConsultasFormComponent } from './consultas-form/consultas-form.componen
 import { ConsultasGridComponent } from './consultas-grid/consultas-grid.component';
 import { ConsultasService } from './consultas.service';
 import { takeUntil } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-consultas',
@@ -25,13 +26,18 @@ export class ConsultasComponent implements OnInit, OnDestroy {
   @ViewChild('grid') grid: ConsultasGridComponent;
   @ViewChild('form') form: ConsultasFormComponent;
 
-  constructor(private consultasService: ConsultasService) { }
+  constructor(private consultasService: ConsultasService,
+    private route: Router) { }
 
   ngOnInit() {
     this.item = undefined;
-    this.showGrid = true;
-    this.inserting = false;
-    this.loadList(this.pagina);
+    if (this.route.url === '/consultas/new') {
+      this.insert();
+    } else {
+      this.showGrid = true;
+      this.inserting = false;
+      this.loadList(this.pagina);
+    }
   }
 
   ngOnDestroy() {

@@ -42,9 +42,8 @@
 
   <div class="card-deck mb-3">
     <div class="card">
-      <div class="card-header card-title text-white bg-dashboard h5">Médicos</div>
+      <div class="card-header card-title text-white bg-dashboard h5">Especialidades requisitadas</div>
       <div class="card-body">
-        <div class="mb-2">Especialidades requisitadas</div>
         <div class="d-none d-md-block">
           <canvas baseChart class="align-middle" [data]="dataMedicos" [labels]="labelsMedicos" chartType="horizontalBar"
             [options]="optionsMedicos" [legend]="false" height="100"></canvas>
@@ -56,14 +55,27 @@
       </div>
     </div>
     <div class="card">
-      <div class="card-header card-title text-white bg-dashboard h5">Pacientes</div>
+      <div class="card-header card-title text-white bg-dashboard h6">Top convênios</div>
       <div class="card-body">
-        <p class="card-text">Gráfico de pacientes</p>
+        <div class="d-none d-md-block">
+          <canvas baseChart class="align-middle" [data]="dataConvenios" [labels]="labelsConvenios" [options]="optionsConvenios"
+            chartType="pie" height="100"></canvas>
+        </div>
+        <div class="d-md-none">
+          <canvas baseChart class="align-middle" [data]="dataConvenios" [labels]="labelsConvenios" [options]="optionsConvenios"
+          chartType="pie" height="200"></canvas>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="card-deck mb-2">
+    <div class="card">
+      <div class="card-header card-title text-white bg-dashboard h6">Top medicamentos</div>
+      <div class="card-body">
+        <p class="card-text">Top medicamentos prescritos</p>
+      </div>
+    </div>
     <div class="card">
       <div class="card-header card-title text-white bg-dashboard h6">Horários</div>
       <div class="card-body">
@@ -72,21 +84,8 @@
         <div class="ml-4 mb-1">Fim: 20:00h</div>
         <div class="ml-4">Tempo da consulta: 30 min</div>
         <div class="text-right btn-group-sm mt-4">
-          <button class="btn text-white btn-dashboard">Configurar</button>
+          <button class="btn text-white btn-dashboard" (click)="gotoHorarios()">Configurar</button>
         </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header card-title text-white bg-dashboard h6">Medicamentos</div>
-      <div class="card-body">
-        <p class="card-text">Top medicamentos prescritos</p>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header card-title text-white bg-dashboard h6">Convênios</div>
-      <div class="card-body">
-        <canvas baseChart class="align-middle" [data]="dataConvenios" [labels]="labelsConvenios" [options]="optionsConvenios"
-          chartType="pie" height="175"></canvas>
       </div>
     </div>
   </div>

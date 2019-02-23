@@ -19,8 +19,9 @@ const routes: Routes = [
   { path: 'medicos', component: MedicosComponent },
   { path: 'horarios', component: HorariosComponent },
   { path: 'medicamentos', component: MedicamentosComponent },
+  { path: 'consultas/new', component: ConsultasComponent },
   { path: 'convenios', component: ConveniosComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
 ];
 
 @NgModule({

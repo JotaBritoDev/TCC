@@ -3,6 +3,7 @@ import { ConsultasService } from '../consultas/consultas.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Consulta } from 'src/app/models/consulta';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,7 +12,8 @@ import { Consulta } from 'src/app/models/consulta';
 export class DashboardComponent implements OnInit, OnDestroy {
 
   private unsubscribe: Subject<void> = new Subject<void>();
-  constructor(private consultasService: ConsultasService) { }
+  constructor(private consultasService: ConsultasService,
+    private route: Router) { }
 
   public carregando: boolean;
 
@@ -292,6 +294,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
+  }
+
+  public gotoHorarios() {
+    this.route.navigateByUrl('/horarios');
   }
 
 }

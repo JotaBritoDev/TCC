@@ -18,6 +18,17 @@ var app = express();
 app.disable('x-powered-by');
 app.use(cors());
 
+app.get('*', (req, res, next) => {
+  if (req.app.get('env') === 'development') {
+    next();
+  }
+  else if (req.headers['x-forwarded-proto'] != 'https') {
+    res.redirect("https://" + req.headers.host + req.url);
+  } else {
+    next();
+  }
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
