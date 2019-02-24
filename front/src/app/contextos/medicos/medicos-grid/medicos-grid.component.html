@@ -4,15 +4,19 @@
   <table class="table table-striped">
     <tbody>
       <tr *ngFor="let medico of lista">
-        <td class="row">
-          <div class="col-8 d-inline-block">
-            <strong class="d-block d-sm-none mt-3"><span class="mr-2">{{ medico.nome }}</span><mat-icon *ngIf="medico.restricoes" class="align-middle mr-2 mb-1" color="primary" [title]="'RESTRIÇÕES\n' + medico.restricoes">info_outline</mat-icon></strong>
-            <span *ngIf="medico.especialidade" class="d-block d-sm-none"><br>{{ medico.especialidade }}</span>
-            <span *ngIf="medico.especialidade" class="d-none d-sm-block"><mat-icon *ngIf="medico.restricoes" class="align-middle mr-2 mb-1" color="primary" [title]="'RESTRIÇÕES\n' + medico.restricoes">info_outline</mat-icon><strong>{{ medico.nome }}</strong> - {{ medico.especialidade }}</span>
-            <div *ngIf="medico.telefone">{{ medico.telefone }}</div>
-          </div>
-          <div class="col-4 d-inline-block pt-1">
-            <app-botoes-grid (editarEvento)="edit.emit(medico)" (excluirEvento)="delete.emit(medico)"></app-botoes-grid>
+        <td class="px-4">
+          <div class="row mb-2">
+            <div class="col-8 d-inline-block">
+              <strong class="d-block d-sm-none mt-3"><span class="mr-2">{{ medico.nome }}</span><mat-icon *ngIf="medico.restricoes" class="align-middle mr-2 mb-1" color="primary" [title]="'RESTRIÇÕES\n' + medico.restricoes">info_outline</mat-icon></strong>
+              <span *ngIf="medico.especialidade" class="d-block d-sm-none"><br>{{ medico.especialidade }}</span>
+              <span class="d-none d-sm-block">
+                <mat-icon *ngIf="medico.restricoes" class="align-middle mr-2 mb-1" color="primary" [title]="'RESTRIÇÕES\n' + medico.restricoes">info_outline</mat-icon>
+                <strong>{{ medico.nome }}</strong><span *ngIf="medico.especialidade"> - {{ medico.especialidade }}</span></span>
+              <div *ngIf="medico.telefone">{{ medico.telefone }}</div>
+            </div>
+            <div class="col-4 d-inline-block pt-1">
+              <app-botoes-grid (editarEvento)="edit.emit(medico)" (excluirEvento)="delete.emit(medico)"></app-botoes-grid>
+            </div>
           </div>
         </td>
       </tr>

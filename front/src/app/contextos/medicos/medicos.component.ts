@@ -4,6 +4,8 @@ import { Medico } from 'src/app/models/medico';
 import { MedicosGridComponent } from './medicos-grid/medicos-grid.component';
 import { MedicosFormComponent } from './medicos-form/medicos-form.component';
 import { MedicosService } from './medicos.service';
+import { Router } from '@angular/router';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-medicos',
@@ -24,13 +26,20 @@ export class MedicosComponent implements OnInit, OnDestroy {
   @ViewChild('form') form: MedicosFormComponent;
   @ViewChild('filtro') filtro: ElementRef;
 
-  constructor(private service: MedicosService) { }
+  constructor(private service: MedicosService,
+    private router: Router) { }
 
   ngOnInit() {
-    this.item = undefined;
-    this.showGrid = true;
-    this.inserting = false;
-    this.loadList(this.pagina);
+    if (this.router.url === '/medicos/new') {
+      this.insert();
+    } else if (this.router.url.includes('/medicos/edit/')) {
+      this.editMedico(this.router.url.replace('/medicos/edit/', ''));
+    } else {
+      this.item = undefined;
+      this.showGrid = true;
+      this.inserting = false;
+      this.loadList(this.pagina);
+    }
   }
 
   ngOnDestroy() {
@@ -46,12 +55,23 @@ export class MedicosComponent implements OnInit, OnDestroy {
 
   public cancel() {
     this.showGrid = true;
+    this.router.navigate(['/medicos']);
+  }
+
+  public editMedico(id: string) {
+    this.isLoading = true;
+    this.service.get(id)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(m => {
+        this.item = m;
+        this.showGrid = false;
+        this.inserting = false;
+        this.isLoading = false;
+      });
   }
 
   public edit(medico: Medico) {
-    this.item = medico;
-    this.showGrid = false;
-    this.inserting = false;
+    this.router.navigate(['/medicos/edit/', medico._id]);
   }
 
   private loadList(page) {
@@ -77,6 +97,7 @@ export class MedicosComponent implements OnInit, OnDestroy {
     result.subscribe(() => this.loadList(this.pagina));
     this.showGrid = true;
     this.ultimoFiltro = '';
+    this.router.navigate(['/medicos']);
   }
 
   public delete(medico) {

@@ -4,14 +4,16 @@
   <table class="table table-striped">
     <tbody>
       <tr *ngFor="let paciente of lista">
-        <td class="row">
-          <div class="col-8 d-inline-block">
-            <div class="mt-3 mt-sm-0"><strong>{{ paciente.nome }}</strong></div>
-            <div class="mt-3 mt-sm-0">{{ paciente.email }}</div>
-            <div>{{ paciente.telefone }}</div>
-          </div>
-          <div class="col-4 d-inline-block pt-1 pt-sm-0">
-            <app-botoes-grid (editarEvento)="edit.emit(paciente)" (excluirEvento)="delete.emit(paciente)"></app-botoes-grid>
+        <td class="px-4">
+          <div class="row mb-2">
+            <div class="col-8 d-inline-block">
+              <div class="mt-3 mt-sm-0"><strong>{{ paciente.nome }}</strong></div>
+              <div class="mt-3 mt-sm-0">{{ paciente.email }}</div>
+              <div>{{ paciente.telefone }}</div>
+            </div>
+            <div class="col-4 d-inline-block pt-1 pt-sm-0">
+              <app-botoes-grid (editarEvento)="edit.emit(paciente)" (excluirEvento)="delete.emit(paciente)"></app-botoes-grid>
+            </div>
           </div>
         </td>
       </tr>

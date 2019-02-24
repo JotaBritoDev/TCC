@@ -27,11 +27,11 @@ export class ConsultasComponent implements OnInit, OnDestroy {
   @ViewChild('form') form: ConsultasFormComponent;
 
   constructor(private consultasService: ConsultasService,
-    private route: Router) { }
+    private router: Router) { }
 
   ngOnInit() {
     this.item = undefined;
-    if (this.route.url === '/consultas/new') {
+    if (this.router.url === '/consultas/new') {
       this.insert();
     } else {
       this.showGrid = true;

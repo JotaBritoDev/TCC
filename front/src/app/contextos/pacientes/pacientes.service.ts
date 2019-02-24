@@ -21,6 +21,10 @@ export class PacientesService {
     }
   }
 
+  public get(id: string): Observable<Paciente> {
+    return this.http.get<Paciente>(`${this.serverUrl}id/${id}`);
+  }
+
   public add(paciente: Paciente): Observable<void> {
     return this.http.post<void>(this.serverUrl, paciente);
   }

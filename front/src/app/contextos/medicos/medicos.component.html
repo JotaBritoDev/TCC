@@ -1,10 +1,10 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-1 mb-3 border-bottom">
-  <h3 class="h3 my-0 pt-2 mr-3">Médicos</h3>
+  <h3 class="my-0 pt-2 mr-1">Médicos</h3>
   <div class="btn-toolbar mb-md-0 mt-2 mt-sm-0 ml-auto">
     <div class="mr-2">
       <input type="text" *ngIf="showGrid" [ngClass]="{'border border-primary': filtro.value}" class="form-control" placeholder="Filtrar médico" (keyup.enter)="filtrar()" (blur)="filtrar()" #filtro>
     </div>
-    <button class="btn btn-primary" *ngIf="showGrid" (click)="insert()">
+    <button class="btn btn-primary" *ngIf="showGrid" (click)="router.navigateByUrl('/medicos/new')">
       <mat-icon class="align-middle">person_add</mat-icon>
       <div class="d-none d-sm-inline-block ml-2">Novo</div>
     </button>

@@ -22,6 +22,10 @@ export class MedicosService {
     }
   }
 
+  public get(id: string): Observable<Medico> {
+    return this.http.get<Medico>(`${this.serverUrl}id/${id}`);
+  }
+
   public add(convenio: Convenio): Observable<void> {
     return this.http.post<void>(this.serverUrl, convenio);
   }

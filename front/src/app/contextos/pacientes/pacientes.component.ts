@@ -7,6 +7,7 @@ import { PacientesService } from './pacientes.service';
 import { ConveniosService } from '../convenios/convenios.service';
 import { Convenio } from 'src/app/models/convenio';
 import { takeUntil } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-pacientes',
@@ -29,14 +30,22 @@ export class PacientesComponent implements OnInit, OnDestroy {
   @ViewChild('filtro') filtro: ElementRef;
 
   constructor(private service: PacientesService,
-    private conveniosService: ConveniosService) { }
+    private conveniosService: ConveniosService,
+    private router: Router) { }
 
   ngOnInit() {
+    this.loadCombo();
     this.item = undefined;
     this.showGrid = true;
     this.inserting = false;
-    this.loadList(this.pagina);
-    this.loadCombo();
+
+    if (this.router.url === '/pacientes/new') {
+      this.insert();
+    } else if (this.router.url.includes('/pacientes/edit/')) {
+      this.editPaciente(this.router.url.replace('/pacientes/edit/', ''));
+    } else {
+      this.loadList(this.pagina);
+    }
   }
 
   ngOnDestroy() {
@@ -60,12 +69,25 @@ export class PacientesComponent implements OnInit, OnDestroy {
 
   public cancel() {
     this.showGrid = true;
+    this.router.navigate(['/pacientes']);
   }
 
-  public edit(medico: Paciente) {
-    this.item = medico;
-    this.showGrid = false;
-    this.inserting = false;
+  public edit(paciente: Paciente) {
+    this.router.navigate(['/pacientes/edit', paciente._id]);
+  }
+
+  public editPaciente(id: string) {
+    this.isLoading = true;
+    setTimeout(() => {
+      this.service.get(id)
+        .pipe(takeUntil(this.unsubscribe))
+        .subscribe(p => {
+          this.item = p;
+          this.showGrid = false;
+          this.inserting = false;
+          this.isLoading = false;
+        });
+    }, 250);
   }
 
   private loadList(page) {
@@ -80,22 +102,23 @@ export class PacientesComponent implements OnInit, OnDestroy {
     }, 500);
   }
 
-  public save(medico) {
+  public save(paciente) {
     this.isLoading = true;
     let result: Observable<void>;
     if (this.inserting) {
-      result = this.service.add(medico);
+      result = this.service.add(paciente);
     } else {
-      result = this.service.edit(medico);
+      result = this.service.edit(paciente);
     }
     result.subscribe(() => this.loadList(this.pagina));
     this.showGrid = true;
     this.ultimoFiltro = '';
+    this.router.navigate(['/pacientes']);
   }
 
-  public delete(medico) {
+  public delete(paciente) {
     this.isLoading = true;
-    this.service.delete(medico)
+    this.service.delete(paciente)
       .subscribe(() => this.loadList(this.pagina));
   }
 
