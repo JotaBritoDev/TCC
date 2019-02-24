@@ -110,10 +110,9 @@ export class PacientesComponent implements OnInit, OnDestroy {
     } else {
       result = this.service.edit(paciente);
     }
-    result.subscribe(() => this.loadList(this.pagina));
+    result.subscribe(() => this.router.navigate(['/pacientes']));
     this.showGrid = true;
     this.ultimoFiltro = '';
-    this.router.navigate(['/pacientes']);
   }
 
   public delete(paciente) {

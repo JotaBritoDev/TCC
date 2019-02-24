@@ -16,6 +16,15 @@ router.get('/combo', function(req, res, next) {
     });
 });
 
+router.get('/id/:id', function(req, res, next) {    
+    database()
+        .findOne( { _id: { $eq: ObjectId(req.params.id) } },
+        function(err, docs) {
+            if (err) console.log(err);
+            else res.send(docs);
+    });
+});
+
 router.get('/:pag', function(req, res, next) {
     let pagesize = 10;
     let n = req.params.pag;

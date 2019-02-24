@@ -21,6 +21,10 @@ export class ConveniosService {
     }
   }
 
+  public get(id: string): Observable<Convenio> {
+    return this.http.get<Convenio>(`${this.serverUrl}id/${id}`);
+  }
+
   public add(convenio: Convenio): Observable<void> {
     return this.http.post<void>(this.serverUrl, convenio);
   }

@@ -6,6 +6,7 @@ import { Medicamento } from 'src/app/models/medicamento';
 import { MedicamentosFormComponent } from './medicamentos-form/medicamentos-form.component';
 import { MedicamentosGridComponent } from './medicamentos-grid/medicamentos-grid.component';
 import { MedicamentosService } from './medicamentos.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-medicamentos',
@@ -26,13 +27,21 @@ export class MedicamentosComponent implements OnInit, OnDestroy {
   @ViewChild('form') form: MedicamentosFormComponent;
   @ViewChild('filtro') filtro: ElementRef;
 
-  constructor(private medicamentosService: MedicamentosService) { }
+  constructor(private medicamentosService: MedicamentosService,
+    private router: Router) { }
 
   ngOnInit() {
     this.item = undefined;
     this.showGrid = true;
     this.inserting = false;
-    this.loadList(this.pagina);
+
+    if (this.router.url === '/medicamentos/new') {
+      this.insert();
+    } else if (this.router.url.includes('/medicamentos/edit/')) {
+      this.editMedicamento(this.router.url.replace('/medicamentos/edit/', ''));
+    } else {
+      this.loadList(this.pagina);
+    }
   }
 
   ngOnDestroy() {
@@ -48,12 +57,23 @@ export class MedicamentosComponent implements OnInit, OnDestroy {
 
   public cancel() {
     this.showGrid = true;
+    this.router.navigate(['/medicamentos']);
+  }
+
+  public editMedicamento(id: string) {
+    this.isLoading = true;
+    this.medicamentosService.get(id)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(m => {
+        this.item = m;
+        this.showGrid = false;
+        this.inserting = false;
+        this.isLoading = false;
+      });
   }
 
   public edit(medicamento: Medicamento) {
-    this.item = medicamento;
-    this.showGrid = false;
-    this.inserting = false;
+    this.router.navigate(['/medicamentos/edit', medicamento._id]);
   }
 
   private loadList(page) {
@@ -78,7 +98,7 @@ export class MedicamentosComponent implements OnInit, OnDestroy {
       observable = this.medicamentosService.edit(medicamento);
     }
     observable.pipe(takeUntil(this.unsubscribe))
-    .subscribe(() => this.loadList(this.pagina));
+    .subscribe(() => this.router.navigate(['/medicamentos']));
     this.showGrid = true;
     this.ultimoFiltro = '';
   }

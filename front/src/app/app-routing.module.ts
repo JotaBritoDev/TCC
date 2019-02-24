@@ -12,10 +12,12 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/agenda', pathMatch: 'full' },
+  { path: '', redirectTo: '/consultas', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'agenda', component: AgendaComponent, canActivate: [AuthGuard] },
+  // { path: 'agenda', component: AgendaComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'horarios', component: HorariosComponent, canActivate: [AuthGuard] },
+
 
   { path: 'consultas', component: ConsultasComponent, canActivate: [AuthGuard] },
   { path: 'consultas/new', component: ConsultasComponent, canActivate: [AuthGuard] },
@@ -38,9 +40,23 @@ const routes: Routes = [
     }]
   },
 
-  { path: 'horarios', component: HorariosComponent, canActivate: [AuthGuard] },
   { path: 'medicamentos', component: MedicamentosComponent, canActivate: [AuthGuard] },
+  { path: 'medicamentos/new', component: MedicamentosComponent, canActivate: [AuthGuard] },
+  { path: 'medicamentos/edit', component: MedicamentosComponent, canActivate: [AuthGuard],
+    children: [{
+      path: ':id',
+      component: MedicamentosComponent
+    }]
+  },
+
   { path: 'convenios', component: ConveniosComponent, canActivate: [AuthGuard] },
+  { path: 'convenios/new', component: ConveniosComponent, canActivate: [AuthGuard] },
+  { path: 'convenios/edit', component: ConveniosComponent, canActivate: [AuthGuard],
+    children: [{
+      path: ':id',
+      component: ConveniosComponent
+    }]
+  },
 ];
 
 @NgModule({

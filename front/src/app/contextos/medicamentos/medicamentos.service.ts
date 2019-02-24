@@ -23,6 +23,10 @@ export class MedicamentosService {
     }
   }
 
+  public get(id: string): Observable<Medicamento> {
+    return this.http.get<Medicamento>(`${this.serverUrl}id/${id}`);
+  }
+
   public add(medicamento): Observable<void> {
     return this.http.post<void>(this.serverUrl, medicamento);
   }

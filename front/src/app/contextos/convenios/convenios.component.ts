@@ -4,6 +4,8 @@ import { Subject, Observable } from 'rxjs';
 import { Convenio } from 'src/app/models/convenio';
 import { ConveniosGridComponent } from './convenios-grid/convenios-grid.component';
 import { ConveniosFormComponent } from './convenios-form/convenios-form.component';
+import { Router } from '@angular/router';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-convenios',
@@ -24,13 +26,21 @@ export class ConveniosComponent implements OnInit, OnDestroy {
   @ViewChild('form') form: ConveniosFormComponent;
   @ViewChild('filtro') filtro: ElementRef;
 
-  constructor(private service: ConveniosService) { }
+  constructor(private service: ConveniosService,
+    private router: Router) { }
 
   ngOnInit() {
     this.item = undefined;
     this.showGrid = true;
     this.inserting = false;
-    this.loadList(this.pagina);
+
+    if (this.router.url === '/convenios/new') {
+      this.insert();
+    } else if (this.router.url.includes('/convenios/edit/')) {
+      this.editConvenio(this.router.url.replace('/convenios/edit/', ''));
+    } else {
+      this.loadList(this.pagina);
+    }
   }
 
   ngOnDestroy() {
@@ -46,12 +56,23 @@ export class ConveniosComponent implements OnInit, OnDestroy {
 
   public cancel() {
     this.showGrid = true;
+    this.router.navigate(['/convenios']);
+  }
+
+  public editConvenio(id: string) {
+    this.isLoading = true;
+    this.service.get(id)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(m => {
+        this.item = m;
+        this.showGrid = false;
+        this.inserting = false;
+        this.isLoading = false;
+      });
   }
 
   public edit(convenio: Convenio) {
-    this.item = convenio;
-    this.showGrid = false;
-    this.inserting = false;
+    this.router.navigate(['/convenios/edit', convenio._id]);
   }
 
   private loadList(page) {
@@ -74,7 +95,7 @@ export class ConveniosComponent implements OnInit, OnDestroy {
     } else {
       result = this.service.edit(convenio);
     }
-    result.subscribe(() => this.loadList(this.pagina));
+    result.subscribe(() => this.router.navigate(['/convenios']));
     this.showGrid = true;
     this.ultimoFiltro = '';
   }

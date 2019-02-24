@@ -94,10 +94,9 @@ export class MedicosComponent implements OnInit, OnDestroy {
     } else {
       result = this.service.edit(medico);
     }
-    result.subscribe(() => this.loadList(this.pagina));
+    result.subscribe(() => this.router.navigate(['/medicos']));
     this.showGrid = true;
     this.ultimoFiltro = '';
-    this.router.navigate(['/medicos']);
   }
 
   public delete(medico) {
