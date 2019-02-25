@@ -23,6 +23,10 @@ export class MedicamentosService {
     }
   }
 
+  public getCombo(): Observable<Medicamento[]> {
+    return this.http.get<Medicamento[]>(`${this.serverUrl}combo`);
+  }
+
   public get(id: string): Observable<Medicamento> {
     return this.http.get<Medicamento>(`${this.serverUrl}id/${id}`);
   }

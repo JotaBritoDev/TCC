@@ -30,6 +30,7 @@ import { SemRegistroGridComponent } from '../comum/sem-registro-grid/sem-registr
 import { ChartsModule } from 'ng2-charts';
 import { LoadingComponent } from '../comum/loading/loading.component';
 import { ComumModule } from '../comum/comum.module';
+import { ConsultasAtendimentoComponent } from './consultas/consultas-atendimento/consultas-atendimento.component';
 
 @NgModule({
   imports: [
@@ -59,7 +60,9 @@ import { ComumModule } from '../comum/comum.module';
     PacientesFormComponent,
     PacientesGridComponent,
     ConsultasGridComponent,
-    ConsultasFormComponent
+    ConsultasFormComponent,
+    ConsultasAtendimentoComponent,
+    ConsultasAtendimentoComponent
   ],
   exports: [ ]
 })

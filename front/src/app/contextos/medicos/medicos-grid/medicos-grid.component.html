@@ -5,7 +5,7 @@
     <tbody>
       <tr *ngFor="let medico of lista">
         <td class="px-4">
-          <div class="row mb-2">
+          <div class="row mb-2 mb-sm-0">
             <div class="col-8 d-inline-block">
               <strong class="d-block d-sm-none mt-3"><span class="mr-2">{{ medico.nome }}</span><mat-icon *ngIf="medico.restricoes" class="align-middle mr-2 mb-1" color="primary" [title]="'RESTRIÇÕES\n' + medico.restricoes">info_outline</mat-icon></strong>
               <span *ngIf="medico.especialidade" class="d-block d-sm-none"><br>{{ medico.especialidade }}</span>

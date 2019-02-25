@@ -15,6 +15,16 @@ router.get('/id/:id', function(req, res, next) {
     });
 });
 
+router.get('/combo', function(req, res, next) {
+    database().find( )
+        .collation( { locale: 'pt' } )
+        .sort( { nome: 1 } )
+        .toArray(function(err, docs) {
+            if (err) console.log(err);
+            else res.send(docs);
+    });
+});
+
 router.get('/:pag', function(req, res, next) {
     let pagesize = 10;
     let n = req.params.pag;

@@ -19,8 +19,6 @@ export class AuthGuard implements CanActivate {
       if (this.loginService.UsuarioAutenticado()) {
         return true;
       }
-
-      console.log('Usuário NAO autenticado');
       return false;
     }
 

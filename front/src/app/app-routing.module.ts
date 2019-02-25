@@ -21,6 +21,12 @@ const routes: Routes = [
 
   { path: 'consultas', component: ConsultasComponent, canActivate: [AuthGuard] },
   { path: 'consultas/new', component: ConsultasComponent, canActivate: [AuthGuard] },
+  { path: 'consultas/edit',  component: ConsultasComponent, canActivate: [AuthGuard],
+    children: [{
+      path: ':id',
+      component: ConsultasComponent
+    }]
+  },
 
   { path: 'pacientes', component: PacientesComponent, canActivate: [AuthGuard] },
   { path: 'pacientes/new',  component: PacientesComponent, canActivate: [AuthGuard] },

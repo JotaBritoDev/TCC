@@ -10,7 +10,8 @@
 
 <div *ngIf="!isLoading">
   <app-consultas-grid #grid *ngIf="showGrid" [lista]="consultas" [pagina]="pagina" (delete)="delete($event)" (edit)="edit($event)" (changePage)="loadList($event)"></app-consultas-grid>
-  <app-consultas-form #form *ngIf="!showGrid" [item]="item" (cancel)="cancel()" (save)="save($event)"></app-consultas-form>
+  <app-consultas-form #form *ngIf="!showGrid && !atender" [item]="item" (cancel)="cancel()" (save)="save($event)"></app-consultas-form>
+  <app-consultas-atendimento #atendimento *ngIf="atender" [item]="item" [medicamentosLista]="medicamentos" (cancel)="cancel()" (save)="save($event)"></app-consultas-atendimento>
 </div>
 
 <app-loading [loading]="isLoading"></app-loading>

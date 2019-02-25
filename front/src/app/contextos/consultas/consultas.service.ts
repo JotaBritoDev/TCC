@@ -27,6 +27,10 @@ export class ConsultasService {
     return this.http.get<Consulta[]>(`${this.serverUrl}medico/${medico}/data/${data}`);
   }
 
+  public get(id: string): Observable<Consulta> {
+    return this.http.get<Consulta>(`${this.serverUrl}id/${id}`);
+  }
+
   public add(consulta: Consulta): Observable<void> {
     return this.http.post<void>(this.serverUrl, consulta);
   }

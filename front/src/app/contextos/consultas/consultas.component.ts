@@ -7,6 +7,9 @@ import { ConsultasGridComponent } from './consultas-grid/consultas-grid.componen
 import { ConsultasService } from './consultas.service';
 import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { ConsultasAtendimentoComponent } from './consultas-atendimento/consultas-atendimento.component';
+import { Medicamento } from 'src/app/models/medicamento';
+import { MedicamentosService } from '../medicamentos/medicamentos.service';
 
 @Component({
   selector: 'app-consultas',
@@ -22,17 +25,25 @@ export class ConsultasComponent implements OnInit, OnDestroy {
   public isLoading: boolean;
   public pagina = 1;
   public ultimoFiltro: string;
+  public atender: boolean;
+  public medicamentos: Medicamento[];
 
   @ViewChild('grid') grid: ConsultasGridComponent;
   @ViewChild('form') form: ConsultasFormComponent;
+  @ViewChild('atendimento') atendimento: ConsultasAtendimentoComponent;
 
   constructor(private consultasService: ConsultasService,
-    private router: Router) { }
+    private router: Router,
+    private medicamentosService: MedicamentosService) { }
 
   ngOnInit() {
+    this.loadCombo();
+    this.atender = false;
     this.item = undefined;
     if (this.router.url === '/consultas/new') {
       this.insert();
+    } else if (this.router.url.includes('/consultas/edit')) {
+      this.editConsulta(this.router.url.replace('/consultas/edit/', ''));
     } else {
       this.showGrid = true;
       this.inserting = false;
@@ -45,6 +56,14 @@ export class ConsultasComponent implements OnInit, OnDestroy {
     this.unsubscribe.complete();
   }
 
+  public loadCombo() {
+    this.medicamentosService.getCombo()
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(retorno => {
+        this.medicamentos = retorno;
+      });
+  }
+
   public insert() {
     this.item = undefined;
     this.showGrid = false;
@@ -53,12 +72,24 @@ export class ConsultasComponent implements OnInit, OnDestroy {
 
   public cancel() {
     this.showGrid = true;
+    this.router.navigate(['/consultas']);
+  }
+
+  public editConsulta(id: string) {
+    this.isLoading = true;
+    this.consultasService.get(id)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(m => {
+        this.item = m;
+        this.showGrid = false;
+        this.inserting = false;
+        this.isLoading = false;
+        this.atender = true;
+      });
   }
 
   public edit(consulta: Consulta) {
-    this.item = consulta;
-    this.showGrid = false;
-    this.inserting = false;
+    this.router.navigate(['/consultas/edit/', consulta._id]);
   }
 
   private loadList(page) {
@@ -74,7 +105,7 @@ export class ConsultasComponent implements OnInit, OnDestroy {
     }, 500);
   }
 
-  public save(consulta) {
+  public save(consulta: Consulta) {
     this.isLoading = true;
     let observable: Observable<void>;
     if (this.inserting) {
@@ -83,7 +114,7 @@ export class ConsultasComponent implements OnInit, OnDestroy {
       observable = this.consultasService.edit(consulta);
     }
     observable.pipe(takeUntil(this.unsubscribe))
-    .subscribe(() => this.loadList(this.pagina));
+    .subscribe(() => this.router.navigate(['/consultas']));
     this.showGrid = true;
     this.ultimoFiltro = '';
   }

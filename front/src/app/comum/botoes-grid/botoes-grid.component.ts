@@ -7,6 +7,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 export class BotoesGridComponent implements OnInit {
 
   @Input() habilitado: boolean;
+  @Input() consulta: boolean;
   @Output() editarEvento: EventEmitter<void> = new EventEmitter();
   @Output() excluirEvento: EventEmitter<void> = new EventEmitter();
 

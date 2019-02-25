@@ -1,0 +1,67 @@
+<div class="mb-2">
+  <span class="h3">{{ formatHour(item.data) }}</span>
+  <span class="h6"> - {{ formatDate(item.data) }}</span>
+</div>
+
+<div *ngIf="item.paciente">
+  <div class="ml-sm-4 mb-2">
+    <mat-icon class="align-middle mr-3">person</mat-icon>
+    <span class="h5 align-middle">{{ item.paciente.nome }}</span>
+  </div>
+  <div class="ml-sm-4 mb-2" *ngIf="item.convenio">
+    {{ item.convenio.nome }}
+  </div>
+  <div class="ml-sm-4 mb-2">
+    <mat-icon class="align-middle mr-3">developer_board</mat-icon>
+    <span *ngIf="item.paciente.nascimento" class="align-middle mr-4">{{ formatDate(item.paciente.nascimento) }}</span>
+    <span *ngIf="item.paciente.altura" class="align-middle mr-4">{{ item.paciente.altura }} m</span>
+    <span *ngIf="item.paciente.peso" class="align-middle">{{ item.paciente.peso }} kg</span>
+  </div>
+  <div class="ml-sm-4 mb-2">
+    <mat-icon class="align-middle mr-3">contact_phone</mat-icon>
+    <span class="align-middle mr-4">{{ item.paciente.telefone }}</span>
+  </div>
+  <div class="ml-sm-4">
+    <mat-icon class="align-middle mr-3">contact_mail</mat-icon>
+    <span class="align-middle">{{ item.paciente.email }}</span>
+  </div>
+</div>
+
+<form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <div class="mt-4">
+    <div class="row">
+      <div class="col-sm-6">
+        <div>
+          <span class="h4">Atendimento</span>
+        </div>
+        <textarea formControlName="parecerMedico" class="mt-2 form-control" name="atendimento" id="atendimentoText" cols="" rows="5"></textarea>
+        <app-botoes-formulario class="d-none d-sm-block" [habilitado]="true" (cancelarEvent)="cancel.emit()"></app-botoes-formulario>
+      </div>
+      <div class="col-sm-6 mt-sm-2 mt-4">
+        <span class="h5">Receituário</span>
+        <div class="mt-1">
+          <table class="table table-striped mb-2">
+            <tr *ngFor="let medicamento of medicamentos">
+              <td class="col-10 p-1">
+                <select class="form-control" (change)="selecionarMedicamento(medicamento, $event.target.value)">
+                  <option *ngFor="let itemMedicamento of medicamentosLista" [ngValue]="itemMedicamento">{{ itemMedicamento.nome }}</option>
+                </select>
+              </td>
+              <td class="col-2 p-1">
+                <button class="btn btn-outline-primary float-right">
+                  <mat-icon class="align-middle">delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </table>
+          
+          <button type="button" class="btn btn-outline-primary" (click)="addMedicamento()">
+            <mat-icon class="align-middle mr-1">add_circle_outline</mat-icon>
+            <span class="align-middle">Adicionar medicamento</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <app-botoes-formulario class="d-sm-none" [habilitado]="true" (cancelarEvent)="cancel.emit()"></app-botoes-formulario>
+  </div>
+</form>
